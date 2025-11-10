@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="Fashion Vault - Your Digital Wardrobe, Reimagined. Effortlessly catalog, style, and manage your closet."/>
+    <meta name="keywords" content="fashion, wardrobe, closet, style, outfit planning, digital wardrobe"/>
+    <meta name="author" content="Fashion Vault"/>
+    <title>Fashion Vault - Your Digital Wardrobe, Reimagined</title>
+    <link rel="icon" type="image/png" href="FashioVault.png"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <style>
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#d4af37", // Gold
+              "secondary": "#ffffff", // White
+              "heather": "#b0b0b0", // Heather Grey
+              "accent": "#4a4a4a", // Darker grey for text
+              "neutral": "#f3f4f6", // Light grey for backgrounds
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"],
+              "serif": ["Playfair Display", "serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-secondary font-sans text-accent antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="sticky top-0 z-50 w-full bg-secondary/80 backdrop-blur-sm border-b border-neutral">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="flex h-16 items-center justify-between">
+<div class="flex items-center gap-4">
+    <a href="/" class="flex items-center gap-4" aria-label="Fashion Vault Home">
+        <img src="FashioVault.png" alt="Fashion Vault Logo" class="h-8 w-8 object-contain"/>
+        <h2 class="text-accent text-xl font-bold font-serif leading-tight tracking-[-0.015em]">Fashion Vault</h2>
+    </a>
+</div>
+<div class="hidden md:flex flex-1 items-center justify-end gap-8">
+<nav class="flex items-center gap-9" role="navigation" aria-label="Main navigation">
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="#features">Features</a>
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="#pricing">Pricing</a>
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="#about">About</a>
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="support.html">Support</a>
+</nav>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors" aria-label="Sign Up">
+<span class="truncate">Sign Up</span>
+</button>
+</div>
+<div class="md:hidden">
+<button class="text-accent" id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<div class="md:hidden hidden" id="mobile-menu">
+<nav class="flex flex-col gap-4 py-4" role="navigation" aria-label="Mobile navigation">
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="#features">Features</a>
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="#pricing">Pricing</a>
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="#about">About</a>
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="support.html">Support</a>
+<button class="flex w-full items-center justify-center rounded-full h-10 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+<span>Sign Up</span>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<div class="@container">
+<div class="px-4 py-16 sm:px-6 lg:px-8">
+<div class="relative flex min-h-[60vh] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-xl items-center justify-center p-4 text-center mx-auto max-w-7xl" aria-label="A stylish, well-organized open closet with neatly arranged clothes and accessories" style='background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBv9G9YdV37-IGTWFWt8d2QmFEqGK2y3PW2-gyBHfxg3Rfov1wA23DgwnRPLjWS_TjCSCiwBCozWcc4Dt-5qjHr6XMp3WmgmFfoLX-wG4NzmGmJFDCjgDY3QZjB7LUXBzw4nL_SKi7Yx20WKHQtgDIa_15SgtaguGDyD--L0rRlsWsFllt_grlgFroMn38Oks-98sKUVBMifNaOvOOp_GNQ09462ew9WiSQCmqbQoLSqEO7Ln7vXTvC2GzUaYPyvOxZP9p0YX7HyiQ");'>
+<div class="flex flex-col gap-4">
+<h1 class="text-white text-4xl font-serif font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+    Your Digital Wardrobe, Reimagined.
+</h1>
+<h2 class="text-white/90 text-base font-normal leading-normal max-w-2xl mx-auto sm:text-lg">
+    Effortlessly catalog, style, and manage your closet with Fashion Vault.
+</h2>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors" aria-label="Start Your Free Trial">
+<span class="truncate">Start Your Free Trial</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" id="features">
+<div class="flex flex-col gap-10 py-16 @container">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
+<div class="flex flex-col items-center gap-4">
+<div class="flex items-center justify-center size-16 rounded-full bg-neutral text-primary">
+<span class="material-symbols-outlined text-3xl" aria-hidden="true">inventory_2</span>
+</div>
+<div class="flex flex-col gap-2">
+<p class="text-accent text-xl font-bold">Catalog Your Closet</p>
+<p class="text-heather text-base font-normal leading-relaxed">Highlight the ease of digitizing wardrobe items with our smart scanning and tagging features.</p>
+</div>
+</div>
+<div class="flex flex-col items-center gap-4">
+<div class="flex items-center justify-center size-16 rounded-full bg-neutral text-primary">
+<span class="material-symbols-outlined text-3xl" aria-hidden="true">auto_awesome</span>
+</div>
+<div class="flex flex-col gap-2">
+<p class="text-accent text-xl font-bold">Create Your Lookbook</p>
+<p class="text-heather text-base font-normal leading-relaxed">Showcase the feature for creating and saving outfit combinations for any occasion.</p>
+</div>
+</div>
+<div class="flex flex-col items-center gap-4">
+<div class="flex items-center justify-center size-16 rounded-full bg-neutral text-primary">
+<span class="material-symbols-outlined text-3xl" aria-hidden="true">calendar_month</span>
+</div>
+<div class="flex flex-col gap-2">
+<p class="text-accent text-xl font-bold">Plan Your Outfits</p>
+<p class="text-heather text-base font-normal leading-relaxed">Emphasize the calendar and planning functionality to save you time every day.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+<h2 class="text-primary text-3xl font-serif font-bold leading-tight tracking-tight text-center pb-8">Styled by Fashion Vault Users</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-[3/4] col-span-2 row-span-2" aria-label="A woman in a stylish trench coat walking down a city street." style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAVRZ2vM0oIIj0WwSeRfN2PLzvAZ6m38c3noHQSpVBPR74d8abbaAANOYuWmTBamRXMwv-8M4C2UVHF7UTOZDCAswSvrNtNecQZx7ujyrceizFxir65P5xBzMxtR9lQ-LBcI4fPY4ycKcCd27blpL42fns4WLhaFZ2bwOwq8ghrWQ1qJ2P9U4KVFFYf1D6XTW5jH5q48ZDxesoAaCgwNVoBL3TOg8okA0QcGC4dAsr5FrtNK7RFKDSi05O3GD8W9TfHzmmVEHEIBKQ");'>
+<p class="text-white text-lg font-bold leading-tight">Weekend Getaway</p>
+</div>
+<div class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-[3/4]" aria-label="Close-up of a person wearing multiple rings and a watch." style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBSs8-82Rg-yiId15BYIC0Ja1B8JAvv93pmtbdRwKd7ByWE_NLqvDpX2moro4IasFxrPzOpeWD4vlTXxxgPCoySX_NlCFZ5BxDdiAcSB5g5kiofbJe9WhRghI6ajfRS0sPcwjD3AmM2UUiOsX8-YHSTTyIb2bb_oQBy7ehrt9Xt7BDOHI4NA_hwwovW7nQN3Tou9VxL4qBN0MZJSDAa6F2uHopSdgZRjoMq07mQl1Inuuifs0oZbncOr2A5ElryRg2_YhsLw7WyzTg");'>
+<p class="text-white text-lg font-bold leading-tight">City Nights</p>
+</div>
+<div class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-[3/4]" aria-label="A woman in a blazer and trousers, looking professional." style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCmHxX-qCWp8vrpEfxaTDSLdd6uckMRzRwdME_UcWwarhzUpP3i9A22Mq7pPKByuoyCD20ZqMXWD-tXk3kuEpW6qKM3kZ4AITQRowdKGFzQonrKQ-MCXV4EVrX4auWM3r38O6LurFOPZqW9Obh76lny6jhbtjy8URMx3-CLYLG1DIpNWcGXkOTp8exesfqxTZtNG053d0lSLNdahGmK5ts4mA32qKXYM8_IW8Sm1Qx_w5r_D_0u7V9X_SM20VdMAxP_Rfh0z1awLW8");'>
+<p class="text-white text-lg font-bold leading-tight">Office Chic</p>
+</div>
+<div class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-[3/4]" aria-label="Person wearing sunglasses and a summer hat." style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBEE503Gk00yflg509MtdtkNavA_lWVgst9KA0DY_12N4xXByvgSdpDl7j4gV4VBnVqo4JsZHhOf8PVAzE4QyZ2mdtCqTc0gJrb0TSICA-57pOBzA08FZvSWDYR3sm8hS0G6CMbvvkRisQjYLtsM_uSE7pVG8msO3omKQ2EBQebWT-6KoTYVlks-q6ehaGNmI4IGBR32X43f3MDmMX6GkZY5NdIpchW-nNSd-QJJOhCa50aoci7XMhUKFoHBpfohtdw0WVxlh5H4K8");'>
+<p class="text-white text-lg font-bold leading-tight">Summer Vibes</p>
+</div>
+<div class="bg-cover bg-center flex flex-col gap-3 rounded-lg justify-end p-4 aspect-[3/4]" aria-label="A person wearing a cozy sweater and scarf in autumn." style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1w3ZHE3TPhCz6Xm0DHh6MJSy6SF7KRItxsPTAruGk3ZolZ2zkWbyiYrSqzgyrbEL2zp5NIQT4dz4husSsuyF4DP6FXWflhb3bTX_VXpLWKnPOmifmSl-0mJW_tm0U7SCyHD-XNMMK_V9GmXU-pyOI-Gip4PqFc7RPWu2WzMNzP4oNR5ZJ2GqkNWt44nG1AVuOzKniHyEaMwnB7U13dQuKkD3yxzVSVeMFpQWAO0QKRGzDx8ORQYTRcs3d2LgB5c4GFMQQWITqWOA");'>
+<p class="text-white text-lg font-bold leading-tight">Autumn Layers</p>
+</div>
+</div>
+</div>
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+<div class="bg-neutral rounded-xl p-8 md:p-16 text-center">
+<div class="flex flex-col items-center gap-4">
+<h2 class="text-primary text-3xl sm:text-4xl font-serif font-bold leading-tight tracking-tight max-w-2xl">
+    Unlock the Potential of Your Wardrobe.
+</h2>
+<p class="text-heather text-base font-normal leading-relaxed max-w-2xl">
+    Join thousands of style enthusiasts who use Fashion Vault to rediscover their closet and curate their perfect look.
+</p>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] mt-4 hover:bg-primary/90 transition-colors" aria-label="Sign Up Now">
+<span class="truncate">Sign Up Now</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-secondary border-t border-neutral">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+<div class="flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="flex items-center gap-4">
+    <img src="FashioVault.png" alt="Fashion Vault Logo" class="h-8 w-8 object-contain"/>
+    <span class="text-accent text-lg font-bold font-serif">Fashion Vault</span>
+</div>
+<div class="flex items-center gap-4 text-heather">
+<a class="hover:text-primary transition-colors" href="#" aria-label="Instagram">Instagram</a>
+<a class="hover:text-primary transition-colors" href="#" aria-label="Pinterest">Pinterest</a>
+<a class="hover:text-primary transition-colors" href="#" aria-label="Twitter">Twitter</a>
+</div>
+<p class="text-sm text-heather">© 2024 Fashion Vault. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+</div>
+</div>
+<script src="scripts.js"></script>
+</body>
+</html>
+

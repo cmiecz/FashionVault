@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="Fashion Vault Support - How-to guides, tutorials, and video resources to help you get the most out of your digital wardrobe."/>
+    <meta name="keywords" content="fashion vault support, help, tutorials, how-to, guides, video tutorials"/>
+    <meta name="author" content="Fashion Vault"/>
+    <title>Support - Fashion Vault</title>
+    <link rel="icon" type="image/png" href="FashioVault.png"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <style>
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#d4af37", // Gold
+              "secondary": "#ffffff", // White
+              "heather": "#b0b0b0", // Heather Grey
+              "accent": "#4a4a4a", // Darker grey for text
+              "neutral": "#f3f4f6", // Light grey for backgrounds
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"],
+              "serif": ["Playfair Display", "serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-secondary font-sans text-accent antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="sticky top-0 z-50 w-full bg-secondary/80 backdrop-blur-sm border-b border-neutral">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="flex h-16 items-center justify-between">
+<div class="flex items-center gap-4">
+    <a href="/" class="flex items-center gap-4" aria-label="Fashion Vault Home">
+        <img src="FashioVault.png" alt="Fashion Vault Logo" class="h-8 w-8 object-contain"/>
+        <h2 class="text-accent text-xl font-bold font-serif leading-tight tracking-[-0.015em]">Fashion Vault</h2>
+    </a>
+</div>
+<div class="hidden md:flex flex-1 items-center justify-end gap-8">
+<nav class="flex items-center gap-9" role="navigation" aria-label="Main navigation">
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#features">Features</a>
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#pricing">Pricing</a>
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#about">About</a>
+<a class="text-primary text-sm font-medium leading-normal border-b-2 border-primary pb-1" href="support.html">Support</a>
+</nav>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors" aria-label="Sign Up">
+<span class="truncate">Sign Up</span>
+</button>
+</div>
+<div class="md:hidden">
+<button class="text-accent" id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<div class="md:hidden hidden" id="mobile-menu">
+<nav class="flex flex-col gap-4 py-4" role="navigation" aria-label="Mobile navigation">
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#features">Features</a>
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#pricing">Pricing</a>
+<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#about">About</a>
+<a class="text-primary text-sm font-medium leading-normal" href="support.html">Support</a>
+<button class="flex w-full items-center justify-center rounded-full h-10 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+<span>Sign Up</span>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+<div class="flex flex-col gap-8">
+<h1 class="text-primary text-4xl sm:text-5xl font-serif font-bold leading-tight tracking-tight text-center">
+    Support Center
+</h1>
+<p class="text-heather text-lg font-normal leading-relaxed text-center max-w-2xl mx-auto">
+    Find answers, watch tutorials, and learn how to make the most of your Fashion Vault experience.
+</p>
+
+<!-- Search Bar -->
+<div class="max-w-2xl mx-auto w-full">
+<div class="relative">
+<input type="text" id="search-input" placeholder="Search for help articles, videos, or guides..." class="w-full px-6 py-4 rounded-full border-2 border-neutral focus:border-primary focus:outline-none text-accent placeholder-heather"/>
+<span class="material-symbols-outlined absolute right-6 top-1/2 transform -translate-y-1/2 text-heather">search</span>
+</div>
+</div>
+
+<!-- Category Filters -->
+<div class="flex flex-wrap justify-center gap-4 py-4">
+<button class="category-filter px-6 py-2 rounded-full border-2 border-neutral hover:border-primary hover:text-primary transition-colors text-sm font-medium" data-category="all">
+All Topics
+</button>
+<button class="category-filter px-6 py-2 rounded-full border-2 border-neutral hover:border-primary hover:text-primary transition-colors text-sm font-medium" data-category="getting-started">
+Getting Started
+</button>
+<button class="category-filter px-6 py-2 rounded-full border-2 border-neutral hover:border-primary hover:text-primary transition-colors text-sm font-medium" data-category="cataloging">
+Cataloging
+</button>
+<button class="category-filter px-6 py-2 rounded-full border-2 border-neutral hover:border-primary hover:text-primary transition-colors text-sm font-medium" data-category="outfits">
+Outfits & Lookbooks
+</button>
+<button class="category-filter px-6 py-2 rounded-full border-2 border-neutral hover:border-primary hover:text-primary transition-colors text-sm font-medium" data-category="planning">
+Planning & Calendar
+</button>
+</div>
+
+<!-- How-to Articles Section -->
+<div class="py-8">
+<h2 class="text-accent text-2xl font-serif font-bold mb-6">How-To Guides</h2>
+<div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Article cards will be dynamically filtered -->
+<article class="article-card bg-neutral rounded-xl p-6 hover:shadow-lg transition-shadow cursor-pointer" data-category="getting-started" data-title="Welcome to Fashion Vault" data-content="Learn the basics of Fashion Vault and how to get started with your digital wardrobe.">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary text-2xl">play_circle</span>
+<span class="text-xs text-heather uppercase font-medium">Getting Started</span>
+</div>
+<h3 class="text-accent text-xl font-bold mb-2">Welcome to Fashion Vault</h3>
+<p class="text-heather text-sm leading-relaxed">Learn the basics of Fashion Vault and how to get started with your digital wardrobe.</p>
+</article>
+
+<article class="article-card bg-neutral rounded-xl p-6 hover:shadow-lg transition-shadow cursor-pointer" data-category="cataloging" data-title="How to Catalog Your Clothes" data-content="Step-by-step guide to adding and organizing your wardrobe items in Fashion Vault.">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary text-2xl">inventory_2</span>
+<span class="text-xs text-heather uppercase font-medium">Cataloging</span>
+</div>
+<h3 class="text-accent text-xl font-bold mb-2">How to Catalog Your Clothes</h3>
+<p class="text-heather text-sm leading-relaxed">Step-by-step guide to adding and organizing your wardrobe items in Fashion Vault.</p>
+</article>
+
+<article class="article-card bg-neutral rounded-xl p-6 hover:shadow-lg transition-shadow cursor-pointer" data-category="outfits" data-title="Creating Your First Lookbook" data-content="Discover how to create and save outfit combinations for any occasion.">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary text-2xl">auto_awesome</span>
+<span class="text-xs text-heather uppercase font-medium">Outfits</span>
+</div>
+<h3 class="text-accent text-xl font-bold mb-2">Creating Your First Lookbook</h3>
+<p class="text-heather text-sm leading-relaxed">Discover how to create and save outfit combinations for any occasion.</p>
+</article>
+
+<article class="article-card bg-neutral rounded-xl p-6 hover:shadow-lg transition-shadow cursor-pointer" data-category="planning" data-title="Using the Outfit Planner" data-content="Plan your outfits in advance with our calendar feature to save time every morning.">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary text-2xl">calendar_month</span>
+<span class="text-xs text-heather uppercase font-medium">Planning</span>
+</div>
+<h3 class="text-accent text-xl font-bold mb-2">Using the Outfit Planner</h3>
+<p class="text-heather text-sm leading-relaxed">Plan your outfits in advance with our calendar feature to save time every morning.</p>
+</article>
+
+<article class="article-card bg-neutral rounded-xl p-6 hover:shadow-lg transition-shadow cursor-pointer" data-category="cataloging" data-title="Smart Tagging System" data-content="Learn how to use tags to organize and quickly find items in your wardrobe.">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary text-2xl">label</span>
+<span class="text-xs text-heather uppercase font-medium">Cataloging</span>
+</div>
+<h3 class="text-accent text-xl font-bold mb-2">Smart Tagging System</h3>
+<p class="text-heather text-sm leading-relaxed">Learn how to use tags to organize and quickly find items in your wardrobe.</p>
+</article>
+
+<article class="article-card bg-neutral rounded-xl p-6 hover:shadow-lg transition-shadow cursor-pointer" data-category="getting-started" data-title="Setting Up Your Profile" data-content="Customize your Fashion Vault profile and preferences to match your style.">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary text-2xl">person</span>
+<span class="text-xs text-heather uppercase font-medium">Getting Started</span>
+</div>
+<h3 class="text-accent text-xl font-bold mb-2">Setting Up Your Profile</h3>
+<p class="text-heather text-sm leading-relaxed">Customize your Fashion Vault profile and preferences to match your style.</p>
+</article>
+</div>
+</div>
+
+<!-- Video Tutorials Section -->
+<div class="py-8">
+<h2 class="text-accent text-2xl font-serif font-bold mb-6">Video Tutorials</h2>
+<div id="videos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Video cards -->
+<div class="video-card bg-neutral rounded-xl overflow-hidden hover:shadow-lg transition-shadow" data-category="getting-started" data-title="Getting Started with Fashion Vault" data-content="A comprehensive introduction to Fashion Vault features.">
+<div class="aspect-video bg-accent relative">
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-6xl">play_circle</span>
+</div>
+<div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">5:23</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-3 mb-2">
+<span class="text-xs text-heather uppercase font-medium">Getting Started</span>
+</div>
+<h3 class="text-accent text-xl font-bold mb-2">Getting Started with Fashion Vault</h3>
+<p class="text-heather text-sm leading-relaxed">A comprehensive introduction to Fashion Vault features.</p>
+</div>
+</div>
+
+<div class="video-card bg-neutral rounded-xl overflow-hidden hover:shadow-lg transition-shadow" data-category="cataloging" data-title="Cataloging Your Wardrobe" data-content="Watch how to quickly add and organize your clothing items.">
+<div class="aspect-video bg-accent relative">
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-6xl">play_circle</span>
+</div>
+<div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">7:45</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-3 mb-2">
+<span class="text-xs text-heather uppercase font-medium">Cataloging</span>
+</div>
+<h3 class="text-accent text-xl font-bold mb-2">Cataloging Your Wardrobe</h3>
+<p class="text-heather text-sm leading-relaxed">Watch how to quickly add and organize your clothing items.</p>
+</div>
+</div>
+
+<div class="video-card bg-neutral rounded-xl overflow-hidden hover:shadow-lg transition-shadow" data-category="outfits" data-title="Creating Outfit Combinations" data-content="Learn to create and save beautiful outfit combinations.">
+<div class="aspect-video bg-accent relative">
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-6xl">play_circle</span>
+</div>
+<div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">4:12</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-3 mb-2">
+<span class="text-xs text-heather uppercase font-medium">Outfits</span>
+</div>
+<h3 class="text-accent text-xl font-bold mb-2">Creating Outfit Combinations</h3>
+<p class="text-heather text-sm leading-relaxed">Learn to create and save beautiful outfit combinations.</p>
+</div>
+</div>
+
+<div class="video-card bg-neutral rounded-xl overflow-hidden hover:shadow-lg transition-shadow" data-category="planning" data-title="Planning Your Weekly Outfits" data-content="Use the calendar feature to plan outfits for the week ahead.">
+<div class="aspect-video bg-accent relative">
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-6xl">play_circle</span>
+</div>
+<div class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">6:30</div>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-3 mb-2">
+<span class="text-xs text-heather uppercase font-medium">Planning</span>
+</div>
+<h3 class="text-accent text-xl font-bold mb-2">Planning Your Weekly Outfits</h3>
+<p class="text-heather text-sm leading-relaxed">Use the calendar feature to plan outfits for the week ahead.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- No Results Message -->
+<div id="no-results" class="hidden text-center py-12">
+<p class="text-heather text-lg">No results found. Try a different search term or category.</p>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-secondary border-t border-neutral">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+<div class="flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="flex items-center gap-4">
+    <img src="FashioVault.png" alt="Fashion Vault Logo" class="h-8 w-8 object-contain"/>
+    <span class="text-accent text-lg font-bold font-serif">Fashion Vault</span>
+</div>
+<div class="flex items-center gap-4 text-heather">
+<a class="hover:text-primary transition-colors" href="#" aria-label="Instagram">Instagram</a>
+<a class="hover:text-primary transition-colors" href="#" aria-label="Pinterest">Pinterest</a>
+<a class="hover:text-primary transition-colors" href="#" aria-label="Twitter">Twitter</a>
+</div>
+<p class="text-sm text-heather">© 2024 Fashion Vault. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+</div>
+</div>
+<script src="scripts.js"></script>
+<script src="support.js"></script>
+</body>
+</html>
+
