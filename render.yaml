@@ -1,11 +1,6 @@
 services:
-  - type: web
+  - type: static
     name: fashion-vault-website
-    env: static
     buildCommand: ""
     staticPublishPath: .
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
 
