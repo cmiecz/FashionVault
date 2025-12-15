@@ -23,11 +23,20 @@
         theme: {
           extend: {
             colors: {
-              "primary": "#d4af37", // Gold
-              "secondary": "#ffffff", // White
-              "heather": "#b0b0b0", // Heather Grey
-              "accent": "#4a4a4a", // Darker grey for text
-              "neutral": "#f3f4f6", // Light grey for backgrounds
+              "primary": "#8B8D8F", // Heather Gray (main UI)
+              "primary-light": "#A5A7A9", // Light heather gray
+              "primary-dark": "#6B6D6F", // Dark heather gray
+              "secondary": "#FFFFFF", // Pure white (cards)
+              "heather": "#8B8D8F", // Heather Grey (alias for primary)
+              "accent": "#D4A574", // Warm Gold (CTAs, highlights)
+              "accent-light": "#E8C599", // Light gold
+              "accent-dark": "#B8895E", // Deep gold (hover states)
+              "text-primary": "#2A2320", // Primary text (near black)
+              "text-secondary": "#6B6360", // Secondary text (dark gray)
+              "text-tertiary": "#9A918E", // Tertiary text (neutral gray)
+              "neutral": "#FFFCFA", // Warm white (main background)
+              "neutral-light": "#FFF8F5", // Off-white
+              "neutral-warm": "#F5F0ED", // Light warm gray (borders)
             },
             fontFamily: {
               "display": ["Inter", "sans-serif"],
@@ -39,42 +48,42 @@
       }
     </script>
 </head>
-<body class="bg-secondary font-sans text-accent antialiased">
+<body class="bg-neutral font-sans text-text-primary antialiased">
 <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
 <div class="layout-container flex h-full grow flex-col">
-<header class="sticky top-0 z-50 w-full bg-secondary/80 backdrop-blur-sm border-b border-neutral">
+<header class="sticky top-0 z-50 w-full bg-secondary/80 backdrop-blur-sm border-b border-neutral-warm">
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 <div class="flex h-16 items-center justify-between">
 <div class="flex items-center gap-4">
     <a href="/" class="flex items-center gap-4" aria-label="Fashion Vault Home">
         <img src="FashioVault.png" alt="Fashion Vault Logo" class="h-8 w-8 object-contain"/>
-        <h2 class="text-accent text-xl font-bold font-serif leading-tight tracking-[-0.015em]">Fashion Vault</h2>
+        <h2 class="text-text-primary text-xl font-bold font-serif leading-tight tracking-[-0.015em]">Fashion Vault</h2>
     </a>
 </div>
 <div class="hidden md:flex flex-1 items-center justify-end gap-8">
 <nav class="flex items-center gap-9" role="navigation" aria-label="Main navigation">
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#features">Features</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#pricing">Pricing</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#about">About</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="support.html">Support</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#features">Features</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#pricing">Pricing</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#about">About</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="support.html">Support</a>
 </nav>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors" aria-label="Sign Up">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors" aria-label="Sign Up">
 <span class="truncate">Sign Up</span>
 </button>
 </div>
 <div class="md:hidden">
-<button class="text-accent" id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false">
+<button class="text-text-primary" id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false">
 <span class="material-symbols-outlined">menu</span>
 </button>
 </div>
 </div>
 <div class="md:hidden hidden" id="mobile-menu">
 <nav class="flex flex-col gap-4 py-4" role="navigation" aria-label="Mobile navigation">
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#features">Features</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#pricing">Pricing</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#about">About</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="support.html">Support</a>
-<button class="flex w-full items-center justify-center rounded-full h-10 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#features">Features</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#pricing">Pricing</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#about">About</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="support.html">Support</a>
+<button class="flex w-full items-center justify-center rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors">
 <span>Sign Up</span>
 </button>
 </nav>
@@ -85,21 +94,21 @@
 <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
 <div class="prose prose-lg max-w-none">
 <h1 class="text-primary text-4xl font-serif font-bold leading-tight tracking-tight mb-4">Terms of Service</h1>
-<p class="text-heather text-sm mb-8">Last updated: January 2025</p>
+<p class="text-text-secondary text-sm mb-8">Last updated: January 2025</p>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Agreement to Terms</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Agreement to Terms</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     By accessing or using Fashion Vault ("the Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of these terms, you may not access the Service.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Description of Service</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Description of Service</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     Fashion Vault is a digital wardrobe management application that allows users to:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Catalog and organize clothing items</li>
     <li>Create and save outfit combinations</li>
     <li>Plan outfits using calendar features</li>
@@ -109,68 +118,68 @@
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">User Accounts</h2>
-<h3 class="text-accent text-xl font-bold mb-3">Account Creation</h3>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">User Accounts</h2>
+<h3 class="text-primary text-xl font-bold mb-3">Account Creation</h3>
+<p class="text-text-secondary leading-relaxed mb-4">
     To use certain features of the Service, you must create an account. You agree to:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Provide accurate, current, and complete information</li>
     <li>Maintain and update your account information</li>
     <li>Maintain the security of your account credentials</li>
     <li>Accept responsibility for all activities under your account</li>
 </ul>
 
-<h3 class="text-accent text-xl font-bold mb-3">Account Termination</h3>
-<p class="text-heather leading-relaxed mb-4">
+<h3 class="text-primary text-xl font-bold mb-3">Account Termination</h3>
+<p class="text-text-secondary leading-relaxed mb-4">
     You may terminate your account at any time. We reserve the right to suspend or terminate accounts that violate these Terms or engage in fraudulent, abusive, or illegal activity.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Subscription and Payment</h2>
-<h3 class="text-accent text-xl font-bold mb-3">Premium Subscriptions</h3>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Subscription and Payment</h2>
+<h3 class="text-primary text-xl font-bold mb-3">Premium Subscriptions</h3>
+<p class="text-text-secondary leading-relaxed mb-4">
     Fashion Vault offers premium subscription plans:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li><strong>Monthly Plan:</strong> $4.99 per month, billed monthly</li>
     <li><strong>Annual Plan:</strong> $39.99 per year, billed annually</li>
 </ul>
 
-<h3 class="text-accent text-xl font-bold mb-3">Payment Terms</h3>
-<p class="text-heather leading-relaxed mb-4">
+<h3 class="text-primary text-xl font-bold mb-3">Payment Terms</h3>
+<p class="text-text-secondary leading-relaxed mb-4">
     By subscribing to a premium plan, you agree to:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Pay all fees associated with your subscription</li>
     <li>Authorize automatic recurring charges (for monthly plans)</li>
     <li>Provide valid payment information</li>
 </ul>
 
-<h3 class="text-accent text-xl font-bold mb-3">Cancellation and Refunds</h3>
-<p class="text-heather leading-relaxed mb-4">
+<h3 class="text-primary text-xl font-bold mb-3">Cancellation and Refunds</h3>
+<p class="text-text-secondary leading-relaxed mb-4">
     You may cancel your subscription at any time through your account settings. Cancellation takes effect at the end of your current billing period. Refunds are provided at our discretion and in accordance with applicable law.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">User Content</h2>
-<h3 class="text-accent text-xl font-bold mb-3">Your Content</h3>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">User Content</h2>
+<h3 class="text-primary text-xl font-bold mb-3">Your Content</h3>
+<p class="text-text-secondary leading-relaxed mb-4">
     You retain ownership of all content you upload to Fashion Vault, including photos, wardrobe data, and outfit combinations. By uploading content, you grant us a license to:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Store and process your content to provide the Service</li>
     <li>Use your content to improve our AI features and algorithms</li>
     <li>Display your content within the Service</li>
 </ul>
 
-<h3 class="text-accent text-xl font-bold mb-3">Content Restrictions</h3>
-<p class="text-heather leading-relaxed mb-4">
+<h3 class="text-primary text-xl font-bold mb-3">Content Restrictions</h3>
+<p class="text-text-secondary leading-relaxed mb-4">
     You agree not to upload content that:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Violates any laws or regulations</li>
     <li>Infringes on intellectual property rights</li>
     <li>Contains harmful, offensive, or inappropriate material</li>
@@ -179,18 +188,18 @@
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Intellectual Property</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Intellectual Property</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     The Service, including its original content, features, and functionality, is owned by Fashion Vault and protected by international copyright, trademark, and other intellectual property laws. You may not copy, modify, distribute, or create derivative works based on the Service without our express written permission.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Prohibited Uses</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Prohibited Uses</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     You agree not to:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Use the Service for any unlawful purpose</li>
     <li>Attempt to gain unauthorized access to the Service or related systems</li>
     <li>Interfere with or disrupt the Service</li>
@@ -201,11 +210,11 @@
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Disclaimers</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Disclaimers</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. WE DO NOT WARRANT THAT:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>The Service will be uninterrupted or error-free</li>
     <li>Defects will be corrected</li>
     <li>The Service is free of viruses or other harmful components</li>
@@ -214,36 +223,36 @@
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Limitation of Liability</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Limitation of Liability</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     TO THE MAXIMUM EXTENT PERMITTED BY LAW, FASHION VAULT SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOSS OF PROFITS, DATA, OR USE, ARISING OUT OF OR RELATING TO YOUR USE OF THE SERVICE.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Indemnification</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Indemnification</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     You agree to indemnify and hold Fashion Vault harmless from any claims, damages, losses, liabilities, and expenses (including legal fees) arising out of your use of the Service, violation of these Terms, or infringement of any rights of another.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Changes to Terms</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Changes to Terms</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     We reserve the right to modify these Terms at any time. We will notify users of material changes by posting the updated Terms on this page and updating the "Last updated" date. Your continued use of the Service after changes become effective constitutes acceptance of the new Terms.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Governing Law</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Governing Law</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which Fashion Vault operates, without regard to its conflict of law provisions.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Contact Information</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Contact Information</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     If you have any questions about these Terms of Service, please contact us at:
 </p>
 <p class="text-heather leading-relaxed">
@@ -280,4 +289,6 @@
 <script src="scripts.js"></script>
 </body>
 </html>
+
+
 

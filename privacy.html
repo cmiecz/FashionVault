@@ -23,11 +23,20 @@
         theme: {
           extend: {
             colors: {
-              "primary": "#d4af37", // Gold
-              "secondary": "#ffffff", // White
-              "heather": "#b0b0b0", // Heather Grey
-              "accent": "#4a4a4a", // Darker grey for text
-              "neutral": "#f3f4f6", // Light grey for backgrounds
+              "primary": "#8B8D8F", // Heather Gray (main UI)
+              "primary-light": "#A5A7A9", // Light heather gray
+              "primary-dark": "#6B6D6F", // Dark heather gray
+              "secondary": "#FFFFFF", // Pure white (cards)
+              "heather": "#8B8D8F", // Heather Grey (alias for primary)
+              "accent": "#D4A574", // Warm Gold (CTAs, highlights)
+              "accent-light": "#E8C599", // Light gold
+              "accent-dark": "#B8895E", // Deep gold (hover states)
+              "text-primary": "#2A2320", // Primary text (near black)
+              "text-secondary": "#6B6360", // Secondary text (dark gray)
+              "text-tertiary": "#9A918E", // Tertiary text (neutral gray)
+              "neutral": "#FFFCFA", // Warm white (main background)
+              "neutral-light": "#FFF8F5", // Off-white
+              "neutral-warm": "#F5F0ED", // Light warm gray (borders)
             },
             fontFamily: {
               "display": ["Inter", "sans-serif"],
@@ -39,42 +48,42 @@
       }
     </script>
 </head>
-<body class="bg-secondary font-sans text-accent antialiased">
+<body class="bg-neutral font-sans text-text-primary antialiased">
 <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
 <div class="layout-container flex h-full grow flex-col">
-<header class="sticky top-0 z-50 w-full bg-secondary/80 backdrop-blur-sm border-b border-neutral">
+<header class="sticky top-0 z-50 w-full bg-secondary/80 backdrop-blur-sm border-b border-neutral-warm">
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 <div class="flex h-16 items-center justify-between">
 <div class="flex items-center gap-4">
     <a href="/" class="flex items-center gap-4" aria-label="Fashion Vault Home">
         <img src="FashioVault.png" alt="Fashion Vault Logo" class="h-8 w-8 object-contain"/>
-        <h2 class="text-accent text-xl font-bold font-serif leading-tight tracking-[-0.015em]">Fashion Vault</h2>
+        <h2 class="text-text-primary text-xl font-bold font-serif leading-tight tracking-[-0.015em]">Fashion Vault</h2>
     </a>
 </div>
 <div class="hidden md:flex flex-1 items-center justify-end gap-8">
 <nav class="flex items-center gap-9" role="navigation" aria-label="Main navigation">
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#features">Features</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#pricing">Pricing</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#about">About</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="support.html">Support</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#features">Features</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#pricing">Pricing</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#about">About</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="support.html">Support</a>
 </nav>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors" aria-label="Sign Up">
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors" aria-label="Sign Up">
 <span class="truncate">Sign Up</span>
 </button>
 </div>
 <div class="md:hidden">
-<button class="text-accent" id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false">
+<button class="text-text-primary" id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false">
 <span class="material-symbols-outlined">menu</span>
 </button>
 </div>
 </div>
 <div class="md:hidden hidden" id="mobile-menu">
 <nav class="flex flex-col gap-4 py-4" role="navigation" aria-label="Mobile navigation">
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#features">Features</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#pricing">Pricing</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="index.html#about">About</a>
-<a class="text-accent text-sm font-medium leading-normal hover:text-primary transition-colors" href="support.html">Support</a>
-<button class="flex w-full items-center justify-center rounded-full h-10 px-6 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#features">Features</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#pricing">Pricing</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#about">About</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="support.html">Support</a>
+<button class="flex w-full items-center justify-center rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors">
 <span>Sign Up</span>
 </button>
 </nav>
@@ -85,44 +94,44 @@
 <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
 <div class="prose prose-lg max-w-none">
 <h1 class="text-primary text-4xl font-serif font-bold leading-tight tracking-tight mb-4">Privacy Policy</h1>
-<p class="text-heather text-sm mb-8">Last updated: January 2025</p>
+<p class="text-text-secondary text-sm mb-8">Last updated: January 2025</p>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Introduction</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Introduction</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     Fashion Vault ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our mobile application and services.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Information We Collect</h2>
-<h3 class="text-accent text-xl font-bold mb-3">Personal Information</h3>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Information We Collect</h2>
+<h3 class="text-primary text-xl font-bold mb-3">Personal Information</h3>
+<p class="text-text-secondary leading-relaxed mb-4">
     We may collect personal information that you provide directly to us, including:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Name and email address</li>
     <li>Account credentials</li>
     <li>Profile information</li>
     <li>Payment information (processed securely through third-party payment processors)</li>
 </ul>
 
-<h3 class="text-accent text-xl font-bold mb-3">Wardrobe Data</h3>
-<p class="text-heather leading-relaxed mb-4">
+<h3 class="text-primary text-xl font-bold mb-3">Wardrobe Data</h3>
+<p class="text-text-secondary leading-relaxed mb-4">
     We collect and store information about your wardrobe, including:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Photos of clothing items</li>
     <li>Item details (brand, size, color, style)</li>
     <li>Outfit combinations and lookbooks</li>
     <li>Calendar and planning data</li>
 </ul>
 
-<h3 class="text-accent text-xl font-bold mb-3">Usage Information</h3>
-<p class="text-heather leading-relaxed mb-4">
+<h3 class="text-primary text-xl font-bold mb-3">Usage Information</h3>
+<p class="text-text-secondary leading-relaxed mb-4">
     We automatically collect certain information about your device and usage patterns, including:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Device information (model, operating system, unique identifiers)</li>
     <li>App usage statistics</li>
     <li>Location data (with your permission, for store reminder features)</li>
@@ -131,11 +140,11 @@
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">How We Use Your Information</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">How We Use Your Information</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     We use the information we collect to:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Provide, maintain, and improve our services</li>
     <li>Process transactions and manage your account</li>
     <li>Enable AI-powered features like outfit matching and style suggestions</li>
@@ -147,11 +156,11 @@
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Data Sharing and Disclosure</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Data Sharing and Disclosure</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     We do not sell your personal information. We may share your information in the following circumstances:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li><strong>Family Sharing:</strong> With other members of your household when you enable family sharing features</li>
     <li><strong>Service Providers:</strong> With trusted third-party service providers who assist in operating our app (cloud storage, payment processing, analytics)</li>
     <li><strong>Legal Requirements:</strong> When required by law or to protect our rights and safety</li>
@@ -160,27 +169,27 @@
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Data Security</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Data Security</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     We implement industry-standard security measures to protect your information, including:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Encrypted data transmission (HTTPS/SSL)</li>
     <li>Secure cloud storage with encryption at rest</li>
     <li>Row-level security in our database</li>
     <li>Regular security audits and updates</li>
 </ul>
-<p class="text-heather leading-relaxed mb-4">
+<p class="text-text-secondary leading-relaxed mb-4">
     However, no method of transmission over the internet or electronic storage is 100% secure. While we strive to protect your data, we cannot guarantee absolute security.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Your Rights and Choices</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Your Rights and Choices</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     You have the right to:
 </p>
-<ul class="list-disc pl-6 text-heather space-y-2 mb-4">
+<ul class="list-disc pl-6 text-text-secondary space-y-2 mb-4">
     <li>Access and update your personal information through the app settings</li>
     <li>Delete your account and associated data</li>
     <li>Opt out of certain data collection (where applicable)</li>
@@ -190,22 +199,22 @@
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Children's Privacy</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Children's Privacy</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     Our services are not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If you become aware that a child has provided us with personal information, please contact us immediately.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Changes to This Privacy Policy</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Changes to This Privacy Policy</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date. You are advised to review this Privacy Policy periodically for any changes.
 </p>
 </section>
 
 <section class="mb-8">
-<h2 class="text-accent text-2xl font-serif font-bold mb-4">Contact Us</h2>
-<p class="text-heather leading-relaxed mb-4">
+<h2 class="text-primary text-2xl font-serif font-bold mb-4">Contact Us</h2>
+<p class="text-text-secondary leading-relaxed mb-4">
     If you have any questions about this Privacy Policy, please contact us at:
 </p>
 <p class="text-heather leading-relaxed">
@@ -242,4 +251,6 @@
 <script src="scripts.js"></script>
 </body>
 </html>
+
+
 
