@@ -52,15 +52,21 @@
             cursor: pointer;
             background: transparent;
             position: relative;
+            transition: all 0.2s ease;
+        }
+        .feature-tab:not(.active) {
+            color: rgba(107, 99, 96, 1);
+            border-bottom-color: transparent !important;
         }
         .feature-tab.active {
-            color: rgba(42, 35, 32, 1);
+            color: rgba(42, 35, 32, 1) !important;
+            border-bottom-color: rgba(212, 165, 116, 1) !important;
         }
         .feature-tab-panel {
             animation: fadeIn 0.3s ease-in-out;
         }
         .feature-tab-panel.hidden {
-            display: none;
+            display: none !important;
         }
         @keyframes fadeIn {
             from {

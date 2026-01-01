@@ -115,25 +115,21 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!targetPanel) return;
         
-        // Remove active state from all tabs and panels
+        // Remove active state from all tabs and hide all panels
         featureTabs.forEach(tab => {
             tab.classList.remove('active');
             tab.setAttribute('aria-selected', 'false');
             tab.setAttribute('tabindex', '-1');
-            tab.classList.remove('border-accent', 'text-text-primary');
-            tab.classList.add('border-transparent', 'text-text-secondary');
         });
         
         featurePanels.forEach(panel => {
             panel.classList.add('hidden');
         });
         
-        // Add active state to selected tab and panel
+        // Add active state to selected tab and show corresponding panel
         targetTab.classList.add('active');
         targetTab.setAttribute('aria-selected', 'true');
         targetTab.setAttribute('tabindex', '0');
-        targetTab.classList.remove('border-transparent', 'text-text-secondary');
-        targetTab.classList.add('border-accent', 'text-text-primary');
         
         targetPanel.classList.remove('hidden');
     }
