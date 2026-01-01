@@ -105,68 +105,69 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Feature Accordion functionality
-    const featureAccordionItems = document.querySelectorAll('.feature-accordion-item');
-    featureAccordionItems.forEach(item => {
-        const header = item.querySelector('.feature-accordion-header');
-        const content = item.querySelector('.feature-accordion-content');
+    // Feature Tabs functionality
+    const featureTabs = document.querySelectorAll('.feature-tab');
+    const featurePanels = document.querySelectorAll('.feature-tab-panel');
+    
+    function switchTab(targetTab) {
+        const targetPanelId = targetTab.getAttribute('aria-controls');
+        const targetPanel = document.getElementById(targetPanelId);
         
-        if (header && content) {
-            // Set initial state - first item (Core Features) is active by default
-            if (item === featureAccordionItems[0]) {
-                item.classList.add('active');
-                content.classList.remove('hidden');
-                header.setAttribute('aria-expanded', 'true');
-            }
+        if (!targetPanel) return;
+        
+        // Remove active state from all tabs and panels
+        featureTabs.forEach(tab => {
+            tab.classList.remove('active');
+            tab.setAttribute('aria-selected', 'false');
+            tab.setAttribute('tabindex', '-1');
+            tab.classList.remove('border-accent', 'text-text-primary');
+            tab.classList.add('border-transparent', 'text-text-secondary');
+        });
+        
+        featurePanels.forEach(panel => {
+            panel.classList.add('hidden');
+        });
+        
+        // Add active state to selected tab and panel
+        targetTab.classList.add('active');
+        targetTab.setAttribute('aria-selected', 'true');
+        targetTab.setAttribute('tabindex', '0');
+        targetTab.classList.remove('border-transparent', 'text-text-secondary');
+        targetTab.classList.add('border-accent', 'text-text-primary');
+        
+        targetPanel.classList.remove('hidden');
+    }
+    
+    // Add click handlers to tabs
+    featureTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            switchTab(tab);
+        });
+        
+        // Keyboard navigation
+        tab.addEventListener('keydown', function(e) {
+            const currentIndex = Array.from(featureTabs).indexOf(tab);
+            let targetIndex;
             
-            header.addEventListener('click', function() {
-                const isActive = item.classList.contains('active');
-                
-                // Close all other accordion items (only one open at a time)
-                featureAccordionItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                        const otherContent = otherItem.querySelector('.feature-accordion-content');
-                        const otherHeader = otherItem.querySelector('.feature-accordion-header');
-                        if (otherContent) {
-                            otherContent.classList.add('hidden');
-                        }
-                        if (otherHeader) {
-                            otherHeader.setAttribute('aria-expanded', 'false');
-                        }
-                    }
-                });
-                
-                // Toggle current item
-                if (isActive) {
-                    item.classList.remove('active');
-                    content.classList.add('hidden');
-                    header.setAttribute('aria-expanded', 'false');
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                if (e.key === 'ArrowRight') {
+                    targetIndex = (currentIndex + 1) % featureTabs.length;
                 } else {
-                    item.classList.add('active');
-                    content.classList.remove('hidden');
-                    header.setAttribute('aria-expanded', 'true');
+                    targetIndex = (currentIndex - 1 + featureTabs.length) % featureTabs.length;
                 }
-            });
-            
-            // Keyboard navigation support
-            header.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    header.click();
-                } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    const currentIndex = Array.from(featureAccordionItems).indexOf(item);
-                    let targetIndex;
-                    if (e.key === 'ArrowDown') {
-                        targetIndex = (currentIndex + 1) % featureAccordionItems.length;
-                    } else {
-                        targetIndex = (currentIndex - 1 + featureAccordionItems.length) % featureAccordionItems.length;
-                    }
-                    featureAccordionItems[targetIndex].querySelector('.feature-accordion-header').focus();
-                }
-            });
-        }
+                switchTab(featureTabs[targetIndex]);
+                featureTabs[targetIndex].focus();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                switchTab(featureTabs[0]);
+                featureTabs[0].focus();
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                switchTab(featureTabs[featureTabs.length - 1]);
+                featureTabs[featureTabs.length - 1].focus();
+            }
+        });
     });
 });
 
