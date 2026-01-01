@@ -53,6 +53,9 @@
             background: transparent;
             position: relative;
             transition: all 0.2s ease;
+            border: none !important;
+            border-bottom: 2px solid transparent !important;
+            border-radius: 0 !important;
         }
         .feature-tab:not(.active) {
             color: rgba(107, 99, 96, 1);
@@ -60,7 +63,10 @@
         }
         .feature-tab.active {
             color: rgba(42, 35, 32, 1) !important;
-            border-bottom-color: rgba(212, 165, 116, 1) !important;
+            border-bottom: 2px solid rgba(212, 165, 116, 1) !important;
+            border-top: none !important;
+            border-left: none !important;
+            border-right: none !important;
         }
         .feature-tab-panel {
             animation: fadeIn 0.3s ease-in-out;
@@ -164,8 +170,8 @@
     Manage your fashion collection with AI-powered smart inventory. Never wonder "what should I wear?" again.
 </h2>
 </div>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors" aria-label="Download Free">
-<span class="truncate">Download Free</span>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors" aria-label="Start Free Trial">
+<span class="truncate">Start Free Trial</span>
 </button>
 </div>
 </div>
@@ -208,7 +214,7 @@ Premium
 </div>
 <div class="flex flex-col gap-2">
 <p class="text-text-primary text-xl font-bold">Wardrobe Management</p>
-<p class="text-text-secondary text-base font-normal leading-relaxed">Browse your closet, view item details, and organize your wardrobe. All manual features are free and don't require credits.</p>
+<p class="text-text-secondary text-base font-normal leading-relaxed">Browse your closet, view item details, and organize your wardrobe. Manual features don't require credits.</p>
 </div>
 </div>
 <div class="flex flex-col items-center gap-4 text-center">
@@ -253,7 +259,7 @@ Premium
 </div>
 <div class="flex flex-col gap-2">
 <p class="text-text-primary text-xl font-bold">Basic Planning</p>
-<p class="text-text-secondary text-base font-normal leading-relaxed">Plan your outfits with calendar features. Manual planning is always free.</p>
+<p class="text-text-secondary text-base font-normal leading-relaxed">Plan your outfits with calendar features. Manual planning doesn't require credits.</p>
 </div>
 </div>
 </div>
@@ -394,11 +400,11 @@ Premium
 <div class="bg-secondary rounded-xl p-8 md:p-12 max-w-4xl mx-auto mb-8">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
 <div>
-<h3 class="text-primary text-xl font-bold mb-4">Free Plan</h3>
+<h3 class="text-primary text-xl font-bold mb-4">3-Day Trial</h3>
 <ul class="space-y-2 text-text-secondary">
-<li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span><span><strong>10 credits</strong> per month</span></li>
-<li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span><span>No rollover (resets monthly)</span></li>
-<li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span><span>Perfect for trying AI features</span></li>
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span><span><strong>Limited credits</strong> to try AI features</span></li>
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span><span>Cancel within 3 days - no charge</span></li>
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm">check_circle</span><span>Full access to explore all features</span></li>
 </ul>
 </div>
 <div>
@@ -488,20 +494,20 @@ Premium
 <h2 class="text-primary text-3xl font-serif font-bold leading-tight tracking-tight text-center pb-8">Choose Your Plan</h2>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
 <div class="bg-secondary rounded-xl p-8">
-<h3 class="text-primary text-2xl font-bold mb-4">Free</h3>
-<p class="text-text-secondary mb-2">Perfect for getting started</p>
-<p class="text-accent text-lg font-bold mb-4">10 AI Credits/Month</p>
-<p class="text-text-secondary text-sm mb-6">No rollover • Includes ads</p>
+<h3 class="text-primary text-2xl font-bold mb-4">3-Day Trial</h3>
+<p class="text-text-secondary mb-2">Try Fashion Vault risk-free</p>
+<p class="text-accent text-lg font-bold mb-4">Limited Credits Included</p>
+<p class="text-text-secondary text-sm mb-6">Cancel within 3 days • No charge</p>
 <ul class="space-y-3 mb-6 text-left">
-<li class="flex items-start gap-2"><span class="material-symbols-outlined text-accent">check</span><span class="text-text-primary">Core features (no credits required)</span></li>
-<li class="flex items-start gap-2"><span class="material-symbols-outlined text-accent">check</span><span class="text-text-primary">Manual item entry</span></li>
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-accent">check</span><span class="text-text-primary">All core features</span></li>
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-accent">check</span><span class="text-text-primary">Try AI-powered features</span></li>
 <li class="flex items-start gap-2"><span class="material-symbols-outlined text-accent">check</span><span class="text-text-primary">Wardrobe management</span></li>
-<li class="flex items-start gap-2"><span class="material-symbols-outlined text-accent">check</span><span class="text-text-primary">Saved outfits</span></li>
-<li class="flex items-start gap-2"><span class="material-symbols-outlined text-accent">check</span><span class="text-text-primary">Shopping lists</span></li>
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-accent">check</span><span class="text-text-primary">Manual item entry</span></li>
+<li class="flex items-start gap-2"><span class="material-symbols-outlined text-accent">check</span><span class="text-text-primary">Full access to explore</span></li>
 <li class="flex items-start gap-2"><span class="material-symbols-outlined text-text-tertiary">close</span><span class="text-text-secondary">Premium features</span></li>
 </ul>
 <button class="w-full rounded-full h-12 px-8 bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors">
-<span>Get Started Free</span>
+<span>Start Free Trial</span>
 </button>
 </div>
 <div class="bg-secondary rounded-xl p-8 border-2 border-neutral-warm">
@@ -607,11 +613,11 @@ Premium
 <div class="max-w-3xl mx-auto space-y-4">
 <div class="faq-item bg-secondary rounded-xl overflow-hidden">
 <button class="faq-question w-full flex items-center justify-between p-6 text-left hover:bg-neutral-warm transition-colors" aria-expanded="false">
-<span class="text-primary text-lg font-semibold">How does the free tier work?</span>
+<span class="text-primary text-lg font-semibold">How does the 3-day trial work?</span>
 <span class="material-symbols-outlined text-accent faq-icon transition-transform">expand_more</span>
 </button>
 <div class="faq-answer px-6">
-<p class="text-text-secondary">You get 10 AI credits per month to try features like scanning and outfit suggestions. Manual wardrobe management is unlimited.</p>
+<p class="text-text-secondary">Start your 3-day trial and get limited credits to try AI features like scanning and outfit suggestions. Cancel within 3 days and you won't be charged. Full access to all features during the trial period.</p>
 </div>
 </div>
 <div class="faq-item bg-secondary rounded-xl overflow-hidden">
@@ -620,16 +626,16 @@ Premium
 <span class="material-symbols-outlined text-accent faq-icon transition-transform">expand_more</span>
 </button>
 <div class="faq-answer px-6">
-<p class="text-text-secondary">You can upgrade to Premium (150 credits/month + rollover) or purchase credit packs. Manual features still work without credits.</p>
+<p class="text-text-secondary">During your trial, you can upgrade to Premium (150 credits/month + rollover) or purchase credit packs. If you cancel within 3 days, you won't be charged. Manual features don't require credits.</p>
 </div>
 </div>
 <div class="faq-item bg-secondary rounded-xl overflow-hidden">
 <button class="faq-question w-full flex items-center justify-between p-6 text-left hover:bg-neutral-warm transition-colors" aria-expanded="false">
-<span class="text-primary text-lg font-semibold">Can I try Premium before paying?</span>
+<span class="text-primary text-lg font-semibold">Can I cancel during the trial?</span>
 <span class="material-symbols-outlined text-accent faq-icon transition-transform">expand_more</span>
 </button>
 <div class="faq-answer px-6">
-<p class="text-text-secondary">Yes! We often offer trial periods. Check the app for current promotions.</p>
+<p class="text-text-secondary">Yes! Cancel within 3 days of starting your trial and you won't be charged anything. You can cancel anytime during the trial period from your account settings.</p>
 </div>
 </div>
 <div class="faq-item bg-secondary rounded-xl overflow-hidden">
@@ -683,7 +689,7 @@ Premium
 <span class="material-symbols-outlined text-accent faq-icon transition-transform">expand_more</span>
 </button>
 <div class="faq-answer px-6">
-<p class="text-text-secondary">Free: Credits reset monthly (no rollover). Premium: Credits roll over up to 300 maximum.</p>
+<p class="text-text-secondary">Trial credits are limited and expire when the trial ends. Premium: Credits roll over up to 300 maximum, so you never lose unused credits.</p>
 </div>
 </div>
 <div class="faq-item bg-secondary rounded-xl overflow-hidden">
@@ -838,10 +844,10 @@ Privacy & Security
     Ready to Organize Your Wardrobe?
 </h2>
 <p class="text-text-secondary text-base font-normal leading-relaxed max-w-2xl">
-    Download Fashion Vault and start scanning your items in seconds. Free tier available - upgrade anytime for unlimited features.
+    Start your 3-day free trial and explore all features. Cancel within 3 days - no charge. Upgrade to Premium anytime for unlimited credits.
 </p>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold leading-normal tracking-[0.015em] mt-4 hover:bg-accent-dark transition-colors" aria-label="Download Free">
-<span class="truncate">Download Free</span>
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold leading-normal tracking-[0.015em] mt-4 hover:bg-accent-dark transition-colors" aria-label="Start Free Trial">
+<span class="truncate">Start Free Trial</span>
 </button>
 </div>
 </div>
