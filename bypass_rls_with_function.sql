@@ -20,7 +20,7 @@ DECLARE
 BEGIN
     INSERT INTO public.signups (email)
     VALUES (email_address)
-    ON CONFLICT (email) DO NOTHING
+    ON CONFLICT ON CONSTRAINT signups_email_key DO NOTHING
     RETURNING signups.id, signups.email, signups.created_at
     INTO v_id, v_email, v_created_at;
     
