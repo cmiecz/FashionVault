@@ -13,12 +13,18 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = public
 AS $$
+DECLARE
+    result_record RECORD;
 BEGIN
-    RETURN QUERY
-    INSERT INTO signups (email)
+    INSERT INTO public.signups (email)
     VALUES (email_address)
     ON CONFLICT (email) DO NOTHING
-    RETURNING signups.id, signups.email, signups.created_at;
+    RETURNING public.signups.id, public.signups.email, public.signups.created_at
+    INTO result_record;
+    
+    IF result_record.id IS NOT NULL THEN
+        RETURN QUERY SELECT result_record.id, result_record.email, result_record.created_at;
+    END IF;
 END;
 $$;
 
