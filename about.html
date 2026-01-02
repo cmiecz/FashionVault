@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="About Fashion Vault - Learn how we're solving wardrobe clarity and organization challenges with smart digital tools."/>
+    <meta name="keywords" content="fashion, wardrobe, closet, style, outfit planning, digital wardrobe, about"/>
+    <meta name="author" content="Fashion Vault"/>
+    <title>About Fashion Vault - Your Digital Wardrobe, Reimagined</title>
+    <link rel="icon" type="image/png" href="FasionVault3.png"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+        .signup-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .signup-modal.active {
+            display: flex;
+        }
+        .signup-modal-content {
+            background: rgba(255, 252, 250, 1);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 28rem;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .signup-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: rgba(107, 99, 96, 1);
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        .signup-modal-close:hover {
+            background: rgba(245, 240, 237, 1);
+            color: rgba(42, 35, 32, 1);
+        }
+        .signup-form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid rgba(245, 240, 237, 1);
+            border-radius: 9999px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+            background: rgba(255, 255, 255, 1);
+        }
+        .signup-form-input:focus {
+            outline: none;
+            border-color: rgba(212, 165, 116, 1);
+        }
+        .signup-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            display: none;
+        }
+        .signup-message.success {
+            display: block;
+            background: rgba(212, 165, 116, 0.1);
+            color: rgba(42, 35, 32, 1);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+        }
+        .signup-message.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            color: rgba(220, 38, 38, 1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#8B8D8F", // Heather Gray (main UI)
+              "primary-light": "#A5A7A9", // Light heather gray
+              "primary-dark": "#6B6D6F", // Dark heather gray
+              "secondary": "#FFFFFF", // Pure white (cards)
+              "heather": "#8B8D8F", // Heather Grey (alias for primary)
+              "accent": "#D4A574", // Warm Gold (CTAs, highlights)
+              "accent-light": "#E8C599", // Light gold
+              "accent-dark": "#B8895E", // Deep gold (hover states)
+              "text-primary": "#2A2320", // Primary text (near black)
+              "text-secondary": "#6B6360", // Secondary text (dark gray)
+              "text-tertiary": "#9A918E", // Tertiary text (neutral gray)
+              "neutral": "#FFFCFA", // Warm white (main background)
+              "neutral-light": "#FFF8F5", // Off-white
+              "neutral-warm": "#F5F0ED", // Light warm gray (borders)
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"],
+              "serif": ["Playfair Display", "serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-neutral font-sans text-text-primary antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="sticky top-0 z-50 w-full bg-secondary/80 backdrop-blur-sm border-b border-neutral-warm">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="flex h-16 items-center justify-between">
+<div class="flex items-center gap-4">
+    <a href="index.html" class="flex items-center gap-4" aria-label="Fashion Vault Home">
+        <img src="FasionVault3.png" alt="Fashion Vault Logo" class="h-8 w-8 object-contain"/>
+        <h2 class="text-text-primary text-xl font-bold font-serif leading-tight tracking-[-0.015em]">Fashion Vault</h2>
+    </a>
+</div>
+<div class="hidden md:flex flex-1 items-center justify-end gap-8">
+<nav class="flex items-center gap-9" role="navigation" aria-label="Main navigation">
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#features">Features</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#pricing">Pricing</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="about.html">About</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="support.html">Support</a>
+</nav>
+<button class="signup-btn flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors" aria-label="Sign Up">
+<span class="truncate">Sign Up</span>
+</button>
+</div>
+<div class="md:hidden">
+<button class="text-text-primary" id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<div class="md:hidden hidden" id="mobile-menu">
+<nav class="flex flex-col gap-4 py-4" role="navigation" aria-label="Mobile navigation">
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#features">Features</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#pricing">Pricing</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="about.html">About</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="support.html">Support</a>
+<button class="signup-btn flex w-full items-center justify-center rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors">
+<span>Sign Up</span>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-primary text-3xl font-serif font-bold leading-tight tracking-tight text-center mb-12 sm:text-4xl">About Fashion Vault</h1>
+        
+        <!-- Introduction -->
+        <div class="mb-12">
+            <p class="text-text-secondary text-base leading-relaxed mb-4">
+                Fashion Vault was created to solve a problem most people live with every day — without even realizing it.
+            </p>
+            <p class="text-text-secondary text-base leading-relaxed mb-4">
+                <strong class="text-text-primary font-semibold">We don't lack clothes.</strong>
+            </p>
+            <p class="text-text-secondary text-base leading-relaxed mb-4">
+                <strong class="text-text-primary font-semibold">We lack clarity.</strong>
+            </p>
+            <p class="text-text-secondary text-base leading-relaxed mb-6">
+                Closets are full, yet mornings feel rushed. We forget what we own, buy duplicates, and still find ourselves asking, "What should I wear today?" The issue isn't style or trends — it's visibility, organization, and decision fatigue.
+            </p>
+            <p class="text-text-secondary text-lg leading-relaxed font-medium text-text-primary">
+                Fashion Vault was developed to change that.
+            </p>
+        </div>
+
+        <!-- Why We Built Fashion Vault -->
+        <div class="bg-secondary rounded-xl p-8 md:p-12 mb-12 shadow-sm border border-neutral-warm/50">
+            <h2 class="text-text-primary text-2xl font-serif font-bold mb-6">Why We Built Fashion Vault</h2>
+            <p class="text-text-secondary text-base leading-relaxed mb-4">
+                We saw that wardrobes were being treated as static storage, when they're actually dynamic systems. Clothes move through seasons, occasions, habits, and life changes — but most people manage all of that mentally.
+            </p>
+            <p class="text-text-secondary text-base leading-relaxed mb-4">
+                <strong class="text-text-primary font-semibold">That mental load adds up.</strong>
+            </p>
+            <p class="text-text-secondary text-base leading-relaxed">
+                Fashion Vault was designed to take the friction out of everyday wardrobe decisions by turning your physical closet into a smart, digital experience — one that helps you understand what you own, how it works together, and how to use it better.
+            </p>
+            <div class="mt-6 pt-6 border-t border-neutral-warm">
+                <p class="text-text-secondary text-base leading-relaxed italic">
+                    Not to tell you what to wear.<br>
+                    Not to push trends.<br>
+                    But to support better decisions using what's already yours.
+                </p>
+            </div>
+        </div>
+
+        <!-- What Fashion Vault Helps You Do -->
+        <div class="mb-12">
+            <h2 class="text-text-primary text-2xl font-serif font-bold mb-6">What Fashion Vault Helps You Do</h2>
+            <p class="text-text-secondary text-base leading-relaxed mb-6">
+                Fashion Vault helps you see your wardrobe clearly and use it intentionally.
+            </p>
+            <p class="text-text-secondary text-base leading-relaxed mb-6">
+                With everything in one place, you can:
+            </p>
+            <ul class="space-y-3 mb-6">
+                <li class="flex items-start gap-3">
+                    <span class="text-accent mt-1.5 flex-shrink-0">
+                        <span class="material-symbols-outlined text-xl">check_circle</span>
+                    </span>
+                    <span class="text-text-secondary text-base leading-relaxed">Understand what you actually own</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-accent mt-1.5 flex-shrink-0">
+                        <span class="material-symbols-outlined text-xl">check_circle</span>
+                    </span>
+                    <span class="text-text-secondary text-base leading-relaxed">Reduce daily outfit decision stress</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-accent mt-1.5 flex-shrink-0">
+                        <span class="material-symbols-outlined text-xl">check_circle</span>
+                    </span>
+                    <span class="text-text-secondary text-base leading-relaxed">Plan outfits ahead of time</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-accent mt-1.5 flex-shrink-0">
+                        <span class="material-symbols-outlined text-xl">check_circle</span>
+                    </span>
+                    <span class="text-text-secondary text-base leading-relaxed">Avoid unnecessary purchases</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-accent mt-1.5 flex-shrink-0">
+                        <span class="material-symbols-outlined text-xl">check_circle</span>
+                    </span>
+                    <span class="text-text-secondary text-base leading-relaxed">Make smarter shopping choices</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-accent mt-1.5 flex-shrink-0">
+                        <span class="material-symbols-outlined text-xl">check_circle</span>
+                    </span>
+                    <span class="text-text-secondary text-base leading-relaxed">Get more value from the clothes you already have</span>
+                </li>
+            </ul>
+            <p class="text-text-secondary text-base leading-relaxed">
+                The result isn't just organization — it's confidence, time saved, and fewer second-guessing moments.
+            </p>
+        </div>
+
+        <!-- Designed for Real Life -->
+        <div class="bg-neutral-warm/30 rounded-xl p-8 md:p-12 mb-12">
+            <h2 class="text-text-primary text-2xl font-serif font-bold mb-6">Designed for Real Life</h2>
+            <p class="text-text-secondary text-base leading-relaxed mb-6">
+                Fashion Vault was built for how people actually live.
+            </p>
+            <p class="text-text-secondary text-base leading-relaxed mb-4">
+                It works whether you:
+            </p>
+            <ul class="space-y-3 mb-6">
+                <li class="flex items-start gap-3">
+                    <span class="text-accent mt-1.5 flex-shrink-0">
+                        <span class="material-symbols-outlined text-xl">circle</span>
+                    </span>
+                    <span class="text-text-secondary text-base leading-relaxed">Manage a single wardrobe or multiple family wardrobes</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-accent mt-1.5 flex-shrink-0">
+                        <span class="material-symbols-outlined text-xl">circle</span>
+                    </span>
+                    <span class="text-text-secondary text-base leading-relaxed">Want structure without rigidity</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-accent mt-1.5 flex-shrink-0">
+                        <span class="material-symbols-outlined text-xl">circle</span>
+                    </span>
+                    <span class="text-text-secondary text-base leading-relaxed">Prefer simplicity over constant trend cycles</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-accent mt-1.5 flex-shrink-0">
+                        <span class="material-symbols-outlined text-xl">circle</span>
+                    </span>
+                    <span class="text-text-secondary text-base leading-relaxed">Are trying to be more mindful about spending and consumption</span>
+                </li>
+            </ul>
+            <p class="text-text-secondary text-base leading-relaxed">
+                The technology behind Fashion Vault is intentionally quiet. AI is used to support clarity and reduce effort — not to overwhelm, replace personal style, or overcomplicate the experience.
+            </p>
+            <p class="text-text-secondary text-base leading-relaxed mt-4 font-medium text-text-primary">
+                You stay in control. The app simply helps you see the bigger picture.
+            </p>
+        </div>
+
+        <!-- Our Philosophy -->
+        <div class="text-center">
+            <h2 class="text-text-primary text-2xl font-serif font-bold mb-6">Our Philosophy</h2>
+            <p class="text-text-secondary text-base leading-relaxed mb-4 max-w-3xl mx-auto">
+                We believe that when you understand what you own, everything gets easier.
+            </p>
+            <div class="space-y-3 mb-6 max-w-2xl mx-auto">
+                <p class="text-text-secondary text-base leading-relaxed">You make faster decisions.</p>
+                <p class="text-text-secondary text-base leading-relaxed">You waste less time and money.</p>
+                <p class="text-text-secondary text-base leading-relaxed">You feel more confident in how you show up each day.</p>
+            </div>
+            <p class="text-text-secondary text-lg leading-relaxed font-medium text-text-primary max-w-3xl mx-auto">
+                Fashion Vault exists to help you raise your wardrobe intelligence — so getting dressed becomes simpler, calmer, and more intentional.
+            </p>
+        </div>
+    </div>
+</div>
+</main>
+<footer class="bg-secondary border-t border-neutral-warm">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+<div class="flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="flex items-center gap-4">
+    <img src="FasionVault3.png" alt="Fashion Vault Logo" class="h-8 w-8 object-contain"/>
+    <span class="text-text-primary text-lg font-bold font-serif">Fashion Vault</span>
+</div>
+<div class="flex items-center gap-4 text-text-secondary">
+<a class="hover:text-accent transition-colors" href="#" aria-label="Instagram">Instagram</a>
+<a class="hover:text-accent transition-colors" href="#" aria-label="Pinterest">Pinterest</a>
+<a class="hover:text-accent transition-colors" href="#" aria-label="Twitter">Twitter</a>
+</div>
+<div class="flex items-center gap-4 text-sm text-text-secondary">
+<a class="hover:text-accent transition-colors" href="privacy.html">Privacy</a>
+<span>•</span>
+<a class="hover:text-accent transition-colors" href="terms.html">Terms</a>
+</div>
+<p class="text-sm text-text-secondary">© 2024 Fashion Vault. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+</div>
+</div>
+
+<!-- Sign-up Modal -->
+<div id="signup-modal" class="signup-modal" role="dialog" aria-labelledby="signup-modal-title" aria-modal="true">
+    <div class="signup-modal-content">
+        <button class="signup-modal-close" id="signup-modal-close" aria-label="Close sign-up modal">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <h2 id="signup-modal-title" class="text-primary text-2xl font-serif font-bold mb-2 text-center">Join the Waitlist</h2>
+        <p class="text-text-secondary text-sm mb-6 text-center">Be the first to know when Fashion Vault launches!</p>
+        <form id="signup-form" class="flex flex-col gap-4">
+            <input 
+                type="email" 
+                id="signup-email" 
+                name="email" 
+                class="signup-form-input" 
+                placeholder="Enter your email address" 
+                required 
+                aria-label="Email address"
+            />
+            <button 
+                type="submit" 
+                class="w-full rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold hover:bg-accent-dark transition-colors"
+                id="signup-submit-btn"
+            >
+                Join Waitlist
+            </button>
+        </form>
+        <div id="signup-message" class="signup-message" role="alert"></div>
+    </div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>
+
