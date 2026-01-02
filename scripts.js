@@ -310,17 +310,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Attempting to insert email:', email);
                 console.log('Supabase client:', supabaseClient);
                 
-                // Insert email into Supabase
+                // Insert email using database function (bypasses RLS)
                 const { data, error } = await supabaseClient
-                    .from('signups')
-                    .insert([{ email: email }])
-                    .select();
+                    .rpc('insert_signup', { email_address: email });
                 
                 console.log('Supabase response - data:', data, 'error:', error);
                 
                 if (error) {
                     // Check if it's a duplicate email error
-                    if (error.code === '23505' || error.message.includes('duplicate') || error.message.includes('unique')) {
+                    if (error.code === '23505' || error.message.includes('duplicate') || error.message.includes('unique') || error.message.includes('conflict')) {
                         showMessage('This email is already on the waitlist!', false);
                     } else {
                         console.error('Supabase error details:', {
@@ -332,9 +330,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         showMessage(`Error: ${error.message || 'Something went wrong. Please try again later.'}`, true);
                     }
                 } else {
-                    // Success
-                    console.log('Successfully added email to waitlist:', data);
-                    showMessage('Thank you! You\'ve been added to the waitlist.', false);
+                    // Success - function returns array, check if we got a result
+                    if (data && data.length > 0) {
+                        console.log('Successfully added email to waitlist:', data);
+                        showMessage('Thank you! You\'ve been added to the waitlist.', false);
+                    } else {
+                        // Function returned empty (likely duplicate)
+                        showMessage('This email is already on the waitlist!', false);
+                    }
                     signupEmailInput.value = '';
                     
                     // Close modal after 2 seconds
