@@ -172,7 +172,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let supabaseClient = null;
     if (typeof supabase !== 'undefined') {
-        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        try {
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            console.log('Supabase client initialized successfully');
+        } catch (err) {
+            console.error('Failed to initialize Supabase client:', err);
+        }
+    } else {
+        console.error('Supabase library not loaded! Check if the script tag is in the HTML.');
     }
     
     // Sign-up Modal functionality
@@ -300,22 +307,33 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             try {
+                console.log('Attempting to insert email:', email);
+                console.log('Supabase client:', supabaseClient);
+                
                 // Insert email into Supabase
                 const { data, error } = await supabaseClient
                     .from('signups')
                     .insert([{ email: email }])
                     .select();
                 
+                console.log('Supabase response - data:', data, 'error:', error);
+                
                 if (error) {
                     // Check if it's a duplicate email error
-                    if (error.code === '23505' || error.message.includes('duplicate')) {
+                    if (error.code === '23505' || error.message.includes('duplicate') || error.message.includes('unique')) {
                         showMessage('This email is already on the waitlist!', false);
                     } else {
-                        console.error('Supabase error:', error);
-                        showMessage('Something went wrong. Please try again later.', true);
+                        console.error('Supabase error details:', {
+                            code: error.code,
+                            message: error.message,
+                            details: error.details,
+                            hint: error.hint
+                        });
+                        showMessage(`Error: ${error.message || 'Something went wrong. Please try again later.'}`, true);
                     }
                 } else {
                     // Success
+                    console.log('Successfully added email to waitlist:', data);
                     showMessage('Thank you! You\'ve been added to the waitlist.', false);
                     signupEmailInput.value = '';
                     
@@ -326,7 +344,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } catch (err) {
                 console.error('Sign-up error:', err);
-                showMessage('Something went wrong. Please try again later.', true);
+                console.error('Error stack:', err.stack);
+                showMessage(`Error: ${err.message || 'Something went wrong. Please try again later.'}`, true);
             } finally {
                 // Re-enable submit button
                 if (signupSubmitBtn) {
