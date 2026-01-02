@@ -14,18 +14,18 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 DECLARE
-    result_id UUID;
-    result_email TEXT;
-    result_created_at TIMESTAMPTZ;
+    v_id UUID;
+    v_email TEXT;
+    v_created_at TIMESTAMPTZ;
 BEGIN
     INSERT INTO public.signups (email)
     VALUES (email_address)
-    ON CONFLICT (public.signups.email) DO NOTHING
-    RETURNING public.signups.id, public.signups.email, public.signups.created_at
-    INTO result_id, result_email, result_created_at;
+    ON CONFLICT (email) DO NOTHING
+    RETURNING id, email, created_at
+    INTO v_id, v_email, v_created_at;
     
-    IF result_id IS NOT NULL THEN
-        RETURN QUERY SELECT result_id, result_email, result_created_at;
+    IF v_id IS NOT NULL THEN
+        RETURN QUERY SELECT v_id, v_email, v_created_at;
     END IF;
 END;
 $$;
