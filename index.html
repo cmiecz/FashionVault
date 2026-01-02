@@ -13,6 +13,7 @@
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         .font-serif { font-family: 'Playfair Display', serif; }
         .font-sans { font-family: 'Inter', sans-serif; }
@@ -103,6 +104,84 @@
                 transform: translateY(0);
             }
         }
+        /* Sign-up Modal Styles */
+        .signup-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .signup-modal.active {
+            display: flex;
+        }
+        .signup-modal-content {
+            background: rgba(255, 252, 250, 1);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 28rem;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .signup-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: rgba(107, 99, 96, 1);
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        .signup-modal-close:hover {
+            background: rgba(245, 240, 237, 1);
+            color: rgba(42, 35, 32, 1);
+        }
+        .signup-form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid rgba(245, 240, 237, 1);
+            border-radius: 9999px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+            background: rgba(255, 255, 255, 1);
+        }
+        .signup-form-input:focus {
+            outline: none;
+            border-color: rgba(212, 165, 116, 1);
+        }
+        .signup-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            display: none;
+        }
+        .signup-message.success {
+            display: block;
+            background: rgba(212, 165, 116, 0.1);
+            color: rgba(42, 35, 32, 1);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+        }
+        .signup-message.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            color: rgba(220, 38, 38, 1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
     </style>
     <script id="tailwind-config">
       tailwind.config = {
@@ -154,7 +233,7 @@
 <a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="#about">About</a>
 <a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="support.html">Support</a>
 </nav>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors" aria-label="Sign Up">
+<button class="signup-btn flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors" aria-label="Sign Up">
 <span class="truncate">Sign Up</span>
 </button>
 </div>
@@ -170,7 +249,7 @@
 <a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="#pricing">Pricing</a>
 <a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="#about">About</a>
 <a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="support.html">Support</a>
-<button class="flex w-full items-center justify-center rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors">
+<button class="signup-btn flex w-full items-center justify-center rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors">
 <span>Sign Up</span>
 </button>
 </nav>
@@ -189,7 +268,7 @@
     R<strong>ai</strong>se your wardrobe intelligence
 </h2>
 </div>
-            <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors" aria-label="Sign up">
+            <button class="signup-btn flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors" aria-label="Sign up">
                 <span class="truncate">Sign up</span>
             </button>
 </div>
@@ -275,7 +354,7 @@
                 <span class="text-primary text-3xl font-bold">Free</span>
             </div>
             <p class="text-text-secondary text-sm mb-8 leading-relaxed">Cancel within 3 days<br>No charge, no risk</p>
-            <button class="mt-auto w-full rounded-full h-12 px-8 bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors">
+            <button class="signup-btn mt-auto w-full rounded-full h-12 px-8 bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors">
                 <span>Sign up</span>
             </button>
         </div>
@@ -292,7 +371,7 @@
                 <span class="text-text-secondary text-sm">/mo</span>
             </div>
             <p class="text-text-secondary text-sm mb-8 leading-relaxed">Billed monthly<br>Ad-free experience</p>
-            <button class="mt-auto w-full rounded-full h-12 px-8 bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors">
+            <button class="signup-btn mt-auto w-full rounded-full h-12 px-8 bg-primary text-white text-base font-bold hover:bg-primary-light transition-colors">
                 <span>Sign up</span>
             </button>
         </div>
@@ -313,7 +392,7 @@
                 <span class="text-accent text-xs font-bold mt-1">Just $4.17/mo</span>
             </div>
             <p class="text-text-secondary text-sm mb-8 leading-relaxed">Billed annually • Save 17%<br>Ad-free experience</p>
-            <button class="mt-auto w-full rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold hover:bg-accent-dark transition-colors">
+            <button class="signup-btn mt-auto w-full rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold hover:bg-accent-dark transition-colors">
                 <span>Sign up</span>
             </button>
         </div>
@@ -412,7 +491,7 @@
         <p class="text-text-secondary text-base font-normal leading-relaxed max-w-2xl">
             Start your 3-day free trial and explore all features. Cancel within 3 days - no charge. Upgrade to Premium anytime.
         </p>
-        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold leading-normal tracking-[0.015em] mt-4 hover:bg-accent-dark transition-colors" aria-label="Sign up">
+        <button class="signup-btn flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold leading-normal tracking-[0.015em] mt-4 hover:bg-accent-dark transition-colors" aria-label="Sign up">
             <span class="truncate">Sign up</span>
         </button>
 </div>
@@ -442,6 +521,37 @@
 </footer>
 </div>
 </div>
+
+<!-- Sign-up Modal -->
+<div id="signup-modal" class="signup-modal" role="dialog" aria-labelledby="signup-modal-title" aria-modal="true">
+    <div class="signup-modal-content">
+        <button class="signup-modal-close" id="signup-modal-close" aria-label="Close sign-up modal">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <h2 id="signup-modal-title" class="text-primary text-2xl font-serif font-bold mb-2 text-center">Join the Waitlist</h2>
+        <p class="text-text-secondary text-sm mb-6 text-center">Be the first to know when Fashion Vault launches!</p>
+        <form id="signup-form" class="flex flex-col gap-4">
+            <input 
+                type="email" 
+                id="signup-email" 
+                name="email" 
+                class="signup-form-input" 
+                placeholder="Enter your email address" 
+                required 
+                aria-label="Email address"
+            />
+            <button 
+                type="submit" 
+                class="w-full rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold hover:bg-accent-dark transition-colors"
+                id="signup-submit-btn"
+            >
+                Join Waitlist
+            </button>
+        </form>
+        <div id="signup-message" class="signup-message" role="alert"></div>
+    </div>
+</div>
+
 <script src="scripts.js"></script>
 </body>
 </html>

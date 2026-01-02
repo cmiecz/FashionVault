@@ -182,15 +182,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const signupEmailInput = document.getElementById('signup-email');
     const signupMessage = document.getElementById('signup-message');
     const signupSubmitBtn = document.getElementById('signup-submit-btn');
-    const signupButtons = document.querySelectorAll('button[aria-label="Sign up"], button[aria-label="Sign Up"]');
+    // Find all sign-up buttons by class (most reliable)
+    const signupButtons = document.querySelectorAll('.signup-btn');
+    
+    // Also find by aria-label as fallback
+    const signupButtonsByAria = document.querySelectorAll('button[aria-label="Sign up"], button[aria-label="Sign Up"]');
+    
+    // Combine both methods (use Set to avoid duplicates)
+    const allSignupButtons = new Set([...signupButtons, ...signupButtonsByAria]);
     
     // Open modal when any sign-up button is clicked
-    signupButtons.forEach(button => {
+    allSignupButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
+            e.stopPropagation();
+            console.log('Sign-up button clicked');
             openSignupModal();
         });
     });
+    
+    console.log('Sign-up buttons found:', allSignupButtons.size);
     
     // Close modal handlers
     if (signupModalClose) {
@@ -214,10 +225,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     function openSignupModal() {
+        console.log('openSignupModal called, modal element:', signupModal);
         if (signupModal) {
             signupModal.classList.add('active');
             signupEmailInput?.focus();
             document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            console.log('Modal opened');
+        } else {
+            console.error('Sign-up modal element not found!');
         }
     }
     
