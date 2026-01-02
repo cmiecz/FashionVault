@@ -21,7 +21,7 @@ BEGIN
     INSERT INTO public.signups (email)
     VALUES (email_address)
     ON CONFLICT (email) DO NOTHING
-    RETURNING id, email, created_at
+    RETURNING signups.id, signups.email, signups.created_at
     INTO v_id, v_email, v_created_at;
     
     IF v_id IS NOT NULL THEN
