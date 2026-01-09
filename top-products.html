@@ -112,6 +112,46 @@
             transform: scale(1.05);
         }
         
+        /* Collection card image collage */
+        .collection-image-collage {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 6px;
+            width: 100%;
+            height: 200px;
+            background: rgba(245, 240, 237, 1);
+            border-radius: 12px;
+            overflow: hidden;
+            padding: 8px;
+        }
+        .collage-image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+        .collage-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .collection-card:hover .collage-image {
+            transform: scale(1.05);
+        }
+        .collage-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: rgba(212, 165, 116, 0.1);
+            color: rgba(212, 165, 116, 0.4);
+        }
+        
         /* Loading skeleton animation */
         @keyframes shimmer {
             0% { background-position: -1000px 0; }
@@ -394,12 +434,32 @@ document.addEventListener('DOMContentLoaded', function() {
             card.setAttribute('aria-label', `View ${collection.name} products`);
             
             const productCount = collection.products.length;
-            const firstProductImage = collection.products[0]?.imageUrl || '';
+            
+            // Get up to 6 product images for the collage
+            const imagesToShow = collection.products.slice(0, 6);
+            const collageImages = imagesToShow.map((product, index) => `
+                <div class="collage-image-container">
+                    <img src="${product.imageUrl}" 
+                         alt="${product.name}" 
+                         class="collage-image" 
+                         loading="lazy"/>
+                </div>
+            `).join('');
+            
+            // Fill remaining slots with placeholders if less than 6 images
+            const remainingSlots = 6 - imagesToShow.length;
+            const placeholders = remainingSlots > 0 ? Array(remainingSlots).fill('').map(() => `
+                <div class="collage-image-container">
+                    <div class="collage-placeholder">
+                        <span class="material-symbols-outlined text-2xl">image</span>
+                    </div>
+                </div>
+            `).join('') : '';
             
             card.innerHTML = `
                 <div class="flex flex-col gap-4">
-                    <div class="flex items-center justify-center w-full h-32 bg-neutral-warm rounded-xl overflow-hidden">
-                        ${firstProductImage ? `<img src="${firstProductImage}" alt="${collection.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='${collection.products[0].imageUrl}'"/>` : `<span class="material-symbols-outlined text-6xl text-accent">shopping_bag</span>`}
+                    <div class="collection-image-collage">
+                        ${collageImages}${placeholders}
                     </div>
                     <div>
                         <h3 class="text-text-primary text-xl font-bold mb-2">${collection.name}</h3>
@@ -424,7 +484,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Open product modal
-    function openProductModal(collection) {
+    function openProductModal(collection, updateUrl = true) {
         productModalTitle.textContent = collection.name;
         productsGrid.innerHTML = '';
         
@@ -451,12 +511,22 @@ document.addEventListener('DOMContentLoaded', function() {
         productModal.classList.add('active');
         document.body.style.overflow = 'hidden';
         productModalClose.focus();
+        
+        // Update URL with collection ID for shareable links
+        if (updateUrl) {
+            window.history.pushState({collectionId: collection.id}, '', `#${collection.id}`);
+        }
     }
     
     // Close product modal
     function closeProductModal() {
         productModal.classList.remove('active');
         document.body.style.overflow = '';
+        
+        // Clear URL hash when closing modal
+        if (window.location.hash) {
+            window.history.pushState('', document.title, window.location.pathname);
+        }
     }
     
     productModalClose.addEventListener('click', closeProductModal);
@@ -472,8 +542,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', function(e) {
+        if (window.location.hash) {
+            const collectionId = window.location.hash.substring(1);
+            const collection = collections.find(c => c.id === collectionId);
+            if (collection) {
+                openProductModal(collection, false);
+            }
+        } else {
+            closeProductModal();
+        }
+    });
+    
+    // Check URL hash on page load to open specific collection
+    function checkUrlHash() {
+        if (window.location.hash) {
+            const collectionId = window.location.hash.substring(1);
+            const collection = collections.find(c => c.id === collectionId);
+            if (collection) {
+                openProductModal(collection, false);
+            }
+        }
+    }
+    
     // Initialize
     renderCollections();
+    checkUrlHash();
 });
 </script>
 </body>
