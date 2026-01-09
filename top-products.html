@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="description" content="Fashion Vault Top Products - Curated fashion essentials and wardrobe must-haves."/>
+    <meta name="keywords" content="fashion, wardrobe, closet, style, products, essentials, recommendations"/>
+    <meta name="author" content="Fashion Vault"/>
+    <title>Top Products - Fashion Vault</title>
+    <link rel="icon" type="image/png" href="FasionVault3.png"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+        
+        /* Modal Styles */
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .product-modal.active {
+            display: flex;
+        }
+        .product-modal-content {
+            background: rgba(255, 252, 250, 1);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 90%;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @media (min-width: 768px) {
+            .product-modal-content {
+                max-width: 900px;
+            }
+        }
+        .product-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: rgba(107, 99, 96, 1);
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+        .product-modal-close:hover {
+            background: rgba(245, 240, 237, 1);
+            color: rgba(42, 35, 32, 1);
+        }
+        
+        /* Collection Card Styles */
+        .collection-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .collection-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Product Card Styles */
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* 1:1 aspect ratio */
+            overflow: hidden;
+            border-radius: 12px;
+            background: rgba(245, 240, 237, 1);
+        }
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        /* Loading skeleton animation */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #F5F0ED 0%, #E8E2DD 50%, #F5F0ED 100%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        /* Sign-up Modal Styles */
+        .signup-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .signup-modal.active {
+            display: flex;
+        }
+        .signup-modal-content {
+            background: rgba(255, 252, 250, 1);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 28rem;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .signup-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: rgba(107, 99, 96, 1);
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        .signup-modal-close:hover {
+            background: rgba(245, 240, 237, 1);
+            color: rgba(42, 35, 32, 1);
+        }
+        .signup-form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid rgba(245, 240, 237, 1);
+            border-radius: 9999px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+            background: rgba(255, 255, 255, 1);
+        }
+        .signup-form-input:focus {
+            outline: none;
+            border-color: rgba(212, 165, 116, 1);
+        }
+        .signup-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            display: none;
+        }
+        .signup-message.success {
+            display: block;
+            background: rgba(212, 165, 116, 0.1);
+            color: rgba(42, 35, 32, 1);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+        }
+        .signup-message.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            color: rgba(220, 38, 38, 1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#8B8D8F",
+              "primary-light": "#A5A7A9",
+              "primary-dark": "#6B6D6F",
+              "secondary": "#FFFFFF",
+              "heather": "#8B8D8F",
+              "accent": "#D4A574",
+              "accent-light": "#E8C599",
+              "accent-dark": "#B8895E",
+              "text-primary": "#2A2320",
+              "text-secondary": "#6B6360",
+              "text-tertiary": "#9A918E",
+              "neutral": "#FFFCFA",
+              "neutral-light": "#FFF8F5",
+              "neutral-warm": "#F5F0ED",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"],
+              "serif": ["Playfair Display", "serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-neutral font-sans text-text-primary antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="sticky top-0 z-50 w-full bg-secondary/80 backdrop-blur-sm border-b border-neutral-warm">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="flex h-16 items-center justify-between">
+<div class="flex items-center gap-4">
+    <a href="index.html" class="flex items-center gap-4" aria-label="Fashion Vault Home">
+        <img src="FasionVault3.png" alt="Fashion Vault Logo" class="h-8 w-8 object-contain"/>
+        <h2 class="text-text-primary text-xl font-bold font-serif leading-tight tracking-[-0.015em]">Fashion Vault</h2>
+    </a>
+</div>
+<div class="hidden md:flex flex-1 items-center justify-end gap-8">
+<nav class="flex items-center gap-9" role="navigation" aria-label="Main navigation">
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#features">Features</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#pricing">Pricing</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="top-products.html">Top Products</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="about.html">About</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="support.html">Support</a>
+</nav>
+<button class="signup-btn flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors" aria-label="Sign Up">
+<span class="truncate">Sign Up</span>
+</button>
+</div>
+<div class="md:hidden">
+<button class="text-text-primary" id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<div class="md:hidden hidden" id="mobile-menu">
+<nav class="flex flex-col gap-4 py-4" role="navigation" aria-label="Mobile navigation">
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#features">Features</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="index.html#pricing">Pricing</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="top-products.html">Top Products</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="about.html">About</a>
+<a class="text-text-primary text-sm font-medium leading-normal hover:text-accent transition-colors" href="support.html">Support</a>
+<button class="signup-btn flex w-full items-center justify-center rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:bg-accent-dark transition-colors">
+<span>Sign Up</span>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-12">
+        <h1 class="text-primary text-3xl font-serif font-bold leading-tight tracking-tight mb-4 sm:text-4xl md:text-5xl">Top Products</h1>
+        <p class="text-text-secondary text-lg max-w-2xl mx-auto">Curated collections of essential products to elevate your wardrobe management</p>
+    </div>
+    
+    <!-- Collections Grid -->
+    <div id="collections-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <!-- Collections will be dynamically inserted here -->
+    </div>
+</div>
+</main>
+<footer class="bg-secondary border-t border-neutral-warm">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+<div class="flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="flex items-center gap-4">
+    <img src="FasionVault3.png" alt="Fashion Vault Logo" class="h-8 w-8 object-contain"/>
+    <span class="text-text-primary text-lg font-bold font-serif">Fashion Vault</span>
+</div>
+<div class="flex items-center gap-4 text-text-secondary">
+<a class="hover:text-accent transition-colors" href="#" aria-label="Instagram">Instagram</a>
+<a class="hover:text-accent transition-colors" href="#" aria-label="Pinterest">Pinterest</a>
+<a class="hover:text-accent transition-colors" href="#" aria-label="Twitter">Twitter</a>
+</div>
+<div class="flex items-center gap-4 text-sm text-text-secondary">
+<a class="hover:text-accent transition-colors" href="privacy.html">Privacy</a>
+<span>•</span>
+<a class="hover:text-accent transition-colors" href="terms.html">Terms</a>
+</div>
+<p class="text-sm text-text-secondary">© 2024 Fashion Vault. All Rights Reserved.</p>
+</div>
+</div>
+</footer>
+</div>
+</div>
+
+<!-- Product Modal -->
+<div id="product-modal" class="product-modal" role="dialog" aria-labelledby="product-modal-title" aria-modal="true">
+    <div class="product-modal-content">
+        <button class="product-modal-close" id="product-modal-close" aria-label="Close product modal">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <h2 id="product-modal-title" class="text-primary text-2xl font-serif font-bold mb-6 pr-8"></h2>
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Products will be dynamically inserted here -->
+        </div>
+    </div>
+</div>
+
+<!-- Sign-up Modal -->
+<div id="signup-modal" class="signup-modal" role="dialog" aria-labelledby="signup-modal-title" aria-modal="true">
+    <div class="signup-modal-content">
+        <button class="signup-modal-close" id="signup-modal-close" aria-label="Close sign-up modal">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <h2 id="signup-modal-title" class="text-primary text-2xl font-serif font-bold mb-2 text-center">Join the Waitlist</h2>
+        <p class="text-text-secondary text-sm mb-6 text-center">Be the first to know when Fashion Vault launches!</p>
+        <form id="signup-form" class="flex flex-col gap-4">
+            <input 
+                type="email" 
+                id="signup-email" 
+                name="email" 
+                class="signup-form-input" 
+                placeholder="Enter your email address" 
+                required 
+                aria-label="Email address"
+            />
+            <button 
+                type="submit" 
+                class="w-full rounded-full h-12 px-8 bg-accent text-text-primary text-base font-bold hover:bg-accent-dark transition-colors"
+                id="signup-submit-btn"
+            >
+                Join Waitlist
+            </button>
+        </form>
+        <div id="signup-message" class="signup-message" role="alert"></div>
+    </div>
+</div>
+
+<script src="top-products-data.js"></script>
+<script src="scripts.js"></script>
+<script>
+// Top Products Page JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    const collectionsContainer = document.getElementById('collections-container');
+    const productModal = document.getElementById('product-modal');
+    const productModalTitle = document.getElementById('product-modal-title');
+    const productsGrid = document.getElementById('products-grid');
+    const productModalClose = document.getElementById('product-modal-close');
+    
+    // Render collection cards
+    function renderCollections() {
+        if (!collections || collections.length === 0) {
+            collectionsContainer.innerHTML = '<p class="text-text-secondary text-center col-span-full">No collections available yet.</p>';
+            return;
+        }
+        
+        collections.forEach(collection => {
+            const card = document.createElement('div');
+            card.className = 'collection-card bg-secondary rounded-2xl p-6 shadow-md border border-neutral-warm/50';
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-label', `View ${collection.name} products`);
+            
+            const productCount = collection.products.length;
+            const firstProductImage = collection.products[0]?.imageUrl || '';
+            
+            card.innerHTML = `
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center justify-center w-full h-32 bg-neutral-warm rounded-xl overflow-hidden">
+                        ${firstProductImage ? `<img src="${firstProductImage}" alt="${collection.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='${collection.products[0].imageUrl}'"/>` : `<span class="material-symbols-outlined text-6xl text-accent">shopping_bag</span>`}
+                    </div>
+                    <div>
+                        <h3 class="text-text-primary text-xl font-bold mb-2">${collection.name}</h3>
+                        <p class="text-text-secondary text-sm mb-4">${productCount} ${productCount === 1 ? 'product' : 'products'}</p>
+                        <button class="w-full rounded-full h-10 px-6 bg-accent text-text-primary text-sm font-bold hover:bg-accent-dark transition-colors">
+                            View Products
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            card.addEventListener('click', () => openProductModal(collection));
+            card.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openProductModal(collection);
+                }
+            });
+            
+            collectionsContainer.appendChild(card);
+        });
+    }
+    
+    // Open product modal
+    function openProductModal(collection) {
+        productModalTitle.textContent = collection.name;
+        productsGrid.innerHTML = '';
+        
+        collection.products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card bg-secondary rounded-xl shadow-md border border-neutral-warm/50 overflow-hidden';
+            
+            productCard.innerHTML = `
+                <div class="product-image-container">
+                    <img src="${product.imageUrl}" alt="${product.name}" class="product-image" loading="lazy"/>
+                </div>
+                <div class="p-4">
+                    <h4 class="text-text-primary text-base font-semibold mb-3 line-clamp-2">${product.name}</h4>
+                    <a href="${product.url}" target="_blank" rel="noopener noreferrer" class="block w-full text-center rounded-full h-10 px-4 bg-accent text-text-primary text-sm font-bold hover:bg-accent-dark transition-colors flex items-center justify-center gap-2">
+                        <span>Visit Shop</span>
+                        <span class="material-symbols-outlined text-sm">open_in_new</span>
+                    </a>
+                </div>
+            `;
+            
+            productsGrid.appendChild(productCard);
+        });
+        
+        productModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        productModalClose.focus();
+    }
+    
+    // Close product modal
+    function closeProductModal() {
+        productModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    productModalClose.addEventListener('click', closeProductModal);
+    productModal.addEventListener('click', (e) => {
+        if (e.target === productModal) {
+            closeProductModal();
+        }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && productModal.classList.contains('active')) {
+            closeProductModal();
+        }
+    });
+    
+    // Initialize
+    renderCollections();
+});
+</script>
+</body>
+</html>

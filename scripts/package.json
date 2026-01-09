@@ -1,0 +1,14 @@
+{
+  "name": "fashion-vault-og-fetcher",
+  "version": "1.0.0",
+  "description": "Fetch Open Graph data from product URLs",
+  "main": "fetch-og-images.js",
+  "scripts": {
+    "fetch": "node fetch-og-images.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "cheerio": "^1.0.0-rc.12",
+    "xlsx": "^0.18.5"
+  }
+}
