@@ -3,6 +3,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs');
 const path = require('path');
+const vm = require('vm');
+const { execSync } = require('child_process');
 
 // Configuration
 const EXCEL_FILE = '../FV TOP PRODUCTS.xlsx';
@@ -12,6 +14,187 @@ const DELAY_MS = 1000; // Delay between requests to be respectful (increased for
 
 // Helper function to delay execution
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+function isPlaceholderImage(imageUrl) {
+  if (!imageUrl) return true;
+  const u = String(imageUrl).trim();
+  if (!u) return true;
+  if (u === PLACEHOLDER_IMAGE) return true;
+  return u.startsWith('https://via.placeholder.com/');
+}
+
+function amazonAsinFromUrl(url) {
+  // Regex-first (more tolerant of odd characters in query strings)
+  try {
+    const s = String(url || '');
+    const m =
+      s.match(/\/dp\/([A-Z0-9]{10})/i) ||
+      s.match(/\/gp\/product\/([A-Z0-9]{10})/i);
+    if (m && m[1]) return String(m[1]).toUpperCase();
+  } catch (e) {
+    // ignore
+  }
+
+  try {
+    const u = new URL(url);
+    const parts = u.pathname.split('/').filter(Boolean);
+    const dpIndex = parts.findIndex(p => p.toLowerCase() === 'dp');
+    if (dpIndex >= 0 && parts[dpIndex + 1]) return parts[dpIndex + 1];
+  } catch (e) {
+    // ignore
+  }
+  return '';
+}
+
+// A lookup key used ONLY to reuse existing images across tracking-param changes.
+function canonicalLookupKey(url) {
+  const asin = amazonAsinFromUrl(url);
+  if (asin) return `amazon:${asin}`;
+  return '';
+}
+
+function loadCollectionsFromJsText(jsText) {
+  const sandbox = { module: { exports: {} }, exports: {} };
+  vm.createContext(sandbox);
+  vm.runInContext(jsText, sandbox, { timeout: 1000 });
+  return sandbox.module.exports.collections || [];
+}
+
+function buildExistingByKey() {
+  const byKey = new Map();
+
+  const ingestCollections = (collections) => {
+    for (const c of collections || []) {
+      for (const p of c.products || []) {
+        const url = normalizeUrl(p.url);
+        if (!url) continue;
+        const imageUrl = (p.imageUrl || '').trim();
+        const name = (p.name || '').trim();
+
+        const exactKey = url;
+        const canonKey = canonicalLookupKey(url);
+
+        // Prefer non-placeholder images if there is a conflict.
+        const existingExact = byKey.get(exactKey);
+        if (!existingExact || (isPlaceholderImage(existingExact.imageUrl) && !isPlaceholderImage(imageUrl))) {
+          byKey.set(exactKey, { name, imageUrl });
+        }
+
+        if (canonKey) {
+          const existingCanon = byKey.get(canonKey);
+          if (!existingCanon || (isPlaceholderImage(existingCanon.imageUrl) && !isPlaceholderImage(imageUrl))) {
+            byKey.set(canonKey, { name, imageUrl });
+          }
+        }
+      }
+    }
+  };
+
+  // 1) Load from working tree file (if present)
+  try {
+    const localPath = path.join(__dirname, OUTPUT_FILE);
+    if (fs.existsSync(localPath)) {
+      const jsText = fs.readFileSync(localPath, 'utf8');
+      ingestCollections(loadCollectionsFromJsText(jsText));
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  // 2) Also load from last committed version (helps if working tree has placeholders)
+  try {
+    const repoRoot = path.join(__dirname, '..');
+    const jsText = execSync('git show HEAD:top-products-data.js', { cwd: repoRoot, stdio: ['ignore', 'pipe', 'ignore'] }).toString();
+    ingestCollections(loadCollectionsFromJsText(jsText));
+  } catch (e) {
+    // ignore (not a git repo or file missing in commit)
+  }
+
+  return byKey;
+}
+
+// Normalize URLs so dedupe is reliable and inputs are consistent
+function normalizeUrl(rawUrl) {
+  if (!rawUrl) return '';
+  let url = String(rawUrl).trim();
+  if (!url) return '';
+
+  // Fix common missing-protocol cases
+  if (url.startsWith('//')) url = `https:${url}`;
+  if (url.startsWith('www.')) url = `https://${url}`;
+  if (url.startsWith('amazon.com/')) url = `https://www.${url}`;
+  if (url.startsWith('amzn.to/')) url = `https://${url}`;
+
+  // If it still isn't absolute, try to make it absolute (best effort)
+  if (!/^https?:\/\//i.test(url)) {
+    // Some spreadsheets omit protocol but include domain
+    if (url.includes('.')) {
+      url = `https://${url}`;
+    } else {
+      return '';
+    }
+  }
+
+  return url;
+}
+
+// Parse the XLSX into [{ collection, url }] supporting both:
+// - legacy 2-column sheets (collection, url)
+// - current multi-column sheet with long/short affiliate links
+function parseSpreadsheetRows(sheet) {
+  const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+  if (!rows.length) return [];
+
+  const headerRow = rows[0].map((h) => String(h || '').trim());
+  const headerLower = headerRow.map((h) => h.toLowerCase());
+  const hasHeader = headerLower.some((h) => h.includes('collection'));
+
+  const idxCollection = hasHeader
+    ? headerLower.findIndex((h) => h.includes('collection'))
+    : 0;
+
+  const idxItem = hasHeader
+    ? headerLower.findIndex((h) => h === 'item' || h.includes('item'))
+    : -1;
+
+  // Prefer non-affiliate long link (if present), then long affiliate, then short affiliate.
+  const idxLongNon = hasHeader
+    ? headerLower.findIndex((h) => h.includes('long') && h.includes('non'))
+    : -1;
+  const idxLongAff = hasHeader
+    ? headerLower.findIndex((h) => h.includes('long') && h.includes('affiliate') && !h.includes('non'))
+    : -1;
+  const idxShortAff = hasHeader
+    ? headerLower.findIndex((h) => h.includes('short') && h.includes('affiliate'))
+    : -1;
+
+  // Legacy format: take 2nd column as URL
+  const idxLegacyUrl = 1;
+
+  const start = hasHeader ? 1 : 0;
+  const parsed = [];
+
+  for (let i = start; i < rows.length; i++) {
+    const row = rows[i] || [];
+    const collection = String(row[idxCollection] || '').trim();
+    if (!collection) continue;
+
+    const item = idxItem >= 0 ? String(row[idxItem] || '').trim() : '';
+
+    const rawUrlCandidate =
+      (idxLongNon >= 0 && row[idxLongNon]) ||
+      (idxLongAff >= 0 && row[idxLongAff]) ||
+      (idxShortAff >= 0 && row[idxShortAff]) ||
+      row[idxLegacyUrl];
+
+    const url = normalizeUrl(rawUrlCandidate);
+    if (!url) continue;
+
+    parsed.push({ collection, url, item });
+  }
+
+  return parsed;
+}
 
 // Helper function to clean and format product names
 function cleanProductName(name) {
@@ -44,6 +227,42 @@ function slugToName(url) {
   } catch (e) {
     return 'Product';
   }
+}
+
+// Try to derive a decent product name from Amazon URL path
+function amazonUrlToName(url) {
+  try {
+    const urlObj = new URL(url);
+    const parts = urlObj.pathname.split('/').filter(Boolean);
+
+    const dpIndex = parts.findIndex(p => p.toLowerCase() === 'dp');
+    if (dpIndex > 0) {
+      const candidate = parts[dpIndex - 1];
+      if (candidate && candidate.includes('-')) {
+        return candidate
+          .replace(/[-_]/g, ' ')
+          .replace(/\b\w/g, char => char.toUpperCase());
+      }
+    }
+
+    // If the URL is /dp/<ASIN> without a name segment, return a stable fallback
+    if (dpIndex === 0 && parts[1]) {
+      const asin = String(parts[1]).trim();
+      if (asin) return `Product ${asin}`;
+    }
+
+    // Fallback: pick the first long hyphenated segment
+    const fallback = parts.find(p => p.includes('-') && p.length >= 8);
+    if (fallback) {
+      return fallback
+        .replace(/[-_]/g, ' ')
+        .replace(/\b\w/g, char => char.toUpperCase());
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  return '';
 }
 
 // Function to extract Amazon product image
@@ -124,6 +343,14 @@ async function fetchOGData(url) {
       slugToName(url);
     
     productName = cleanProductName(productName);
+
+    // If Amazon returns a generic title (often due to bot pages), derive from URL instead
+    if (!productName || /^amazon\.com\b/i.test(productName)) {
+      const derived = amazonUrlToName(finalUrl) || amazonUrlToName(url);
+      if (derived) {
+        productName = derived;
+      }
+    }
     
     // Try to get image
     let imageUrl = null;
@@ -190,14 +417,47 @@ async function main() {
   const workbook = XLSX.readFile(path.join(__dirname, EXCEL_FILE));
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
-  const data = XLSX.utils.sheet_to_json(sheet, { header: ['collection', 'url'] });
+
+  const rawRows = parseSpreadsheetRows(sheet);
+  if (!rawRows.length) {
+    console.log('No valid rows found in spreadsheet. Please check the sheet format.');
+    return;
+  }
+
+  // Dedupe by URL within each collection (keep first occurrence)
+  const seenByCollection = new Map(); // collectionName -> Set(url)
+  const rows = [];
+  let duplicatesRemoved = 0;
+
+  for (const row of rawRows) {
+    const collectionName = row.collection.trim();
+    const url = row.url.trim();
+    const item = (row.item || '').trim();
+
+    if (!seenByCollection.has(collectionName)) {
+      seenByCollection.set(collectionName, new Set());
+    }
+    const seen = seenByCollection.get(collectionName);
+    if (seen.has(url)) {
+      duplicatesRemoved++;
+      continue;
+    }
+    seen.add(url);
+    rows.push({ collection: collectionName, url, item });
+  }
+
+  console.log(
+    `Found ${rows.length} products to process` +
+      (duplicatesRemoved ? ` (${duplicatesRemoved} duplicates removed)` : '') +
+      '\n'
+  );
   
-  // Skip header row if present
-  const startRow = data[0].collection && data[0].collection.toLowerCase().includes('collection') ? 1 : 0;
-  const rows = data.slice(startRow).filter(row => row.collection && row.url);
-  
-  console.log(`Found ${rows.length} products to process\n`);
-  
+  // Build a lookup of existing products so we don't wipe images when Amazon blocks scraping
+  const existingByKey = buildExistingByKey();
+  if (existingByKey.size) {
+    console.log(`Loaded ${existingByKey.size} existing product lookups (for image preservation)\n`);
+  }
+
   // Group by collection
   const collectionMap = new Map();
   
@@ -216,9 +476,39 @@ async function main() {
       });
     }
     
-    // Fetch product data
-    const productData = await fetchOGData(row.url);
-    collectionMap.get(collectionName).products.push(productData);
+    // If we already have a non-placeholder image for this URL (or same Amazon ASIN),
+    // reuse it to avoid losing images when Amazon blocks scraping.
+    const normalizedUrl = normalizeUrl(row.url) || row.url;
+    const exactExisting = existingByKey.get(normalizedUrl) || null;
+    const canonKey = canonicalLookupKey(normalizedUrl);
+    const canonExisting = canonKey ? (existingByKey.get(canonKey) || null) : null;
+    const existing =
+      (exactExisting && !isPlaceholderImage(exactExisting.imageUrl))
+        ? exactExisting
+        : (canonExisting && !isPlaceholderImage(canonExisting.imageUrl))
+          ? canonExisting
+          : exactExisting;
+
+    if (existing && existing.imageUrl && !isPlaceholderImage(existing.imageUrl)) {
+      const nameFromSheet = cleanProductName(row.item || '');
+      const nameFromExisting = cleanProductName(existing.name || '');
+      const stableName = nameFromSheet || nameFromExisting || slugToName(normalizedUrl);
+
+      collectionMap.get(collectionName).products.push({
+        name: stableName,
+        imageUrl: existing.imageUrl,
+        url: normalizedUrl
+      });
+    } else {
+      // Fetch product data
+      const productData = await fetchOGData(normalizedUrl);
+      if (row.item) {
+        // Spreadsheet-provided item names should win (more reliable than Amazon-bot titles)
+        const cleaned = cleanProductName(row.item);
+        if (cleaned) productData.name = cleaned;
+      }
+      collectionMap.get(collectionName).products.push(productData);
+    }
     
     // Be respectful with delays
     if (i < rows.length - 1) {

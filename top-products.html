@@ -52,6 +52,13 @@
                 max-width: 900px;
             }
         }
+        /* On wide screens, widen modal so 5 columns fit without shrinking cards */
+        @media (min-width: 1280px) {
+            .product-modal-content {
+                max-width: 1500px;
+                width: 95%;
+            }
+        }
         .product-modal-close {
             position: absolute;
             top: 1rem;
@@ -372,7 +379,7 @@
             <span class="material-symbols-outlined">close</span>
         </button>
         <h2 id="product-modal-title" class="text-primary text-2xl font-serif font-bold mb-6 pr-8"></h2>
-        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             <!-- Products will be dynamically inserted here -->
         </div>
     </div>
