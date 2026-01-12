@@ -2,9 +2,11 @@
 
 # Quick deployment commands for Fashion Vault email notifications
 # Run these commands one by one
+# SECURITY: Never commit API keys! Set them as environment variables
 
 echo "Step 1: Setting Resend API key..."
-supabase secrets set RESEND_API_KEY=re_oSg2yjaZ_JTGccg6LCtPjvZdpiDS7JpdZ
+echo "⚠️  Replace YOUR_RESEND_API_KEY with your actual key from https://resend.com/api-keys"
+supabase secrets set RESEND_API_KEY=YOUR_RESEND_API_KEY
 
 echo "Step 2: Setting notification email..."
 supabase secrets set NOTIFICATION_EMAIL=cass.miecz@gmail.com
