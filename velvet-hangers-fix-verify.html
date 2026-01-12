@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Velvet Hangers Image - Fixed</title>
+</head>
+<body style="font-family: Arial; padding: 20px;">
+    <h1>✅ Velvet Hangers Image - FIXED</h1>
+    
+    <h2>Old (Broken) URL:</h2>
+    <p style="color: red;">https://m.media-amazon.com/images/I/71nP9p2XDCL._AC_SL1500_.jpg</p>
+    <img src="https://m.media-amazon.com/images/I/71nP9p2XDCL._AC_SL1500_.jpg" 
+         style="width: 300px; border: 2px solid red;" 
+         onerror="this.parentElement.querySelector('.status-old').textContent = '❌ 404 ERROR - Image not found'">
+    <p class="status-old" style="color: red; font-weight: bold;"></p>
+    
+    <hr style="margin: 30px 0;">
+    
+    <h2>New (Working) URL:</h2>
+    <p style="color: green;">https://m.media-amazon.com/images/I/51JyoUYNwTL._AC_SL1500_.jpg</p>
+    <img src="https://m.media-amazon.com/images/I/51JyoUYNwTL._AC_SL1500_.jpg" 
+         style="width: 300px; border: 2px solid green;" 
+         onload="this.parentElement.querySelector('.status-new').textContent = '✅ SUCCESS - Image loaded!'">
+    <p class="status-new" style="color: green; font-weight: bold;"></p>
+    
+    <hr style="margin: 30px 0;">
+    
+    <p><strong>Product:</strong> HOUSE DAY Black Velvet Hangers 60 Pack</p>
+    <p><a href="file:///Users/cassmieczakowski/Documents/FashionVault_Website/top-products.html" style="color: #D4A574; font-size: 18px;">→ Open Top Products Page</a></p>
+</body>
+</html>
