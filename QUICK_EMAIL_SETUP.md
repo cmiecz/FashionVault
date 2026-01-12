@@ -8,7 +8,7 @@ Run these commands in your terminal (make sure you have Supabase CLI installed a
 
 ```bash
 # Set Resend API key
-supabase secrets set RESEND_API_KEY=REDACTED_API_KEY
+supabase secrets set RESEND_API_KEY=re_oSg2yjaZ_JTGccg6LCtPjvZdpiDS7JpdZ
 
 # Set your notification email
 supabase secrets set NOTIFICATION_EMAIL=cass.miecz@gmail.com
