@@ -1,15 +1,23 @@
 # Fashion Vault - Robots.txt
-# Allow all crawlers to access all content
+# Allow all crawlers to access public content
 
 User-agent: *
 Allow: /
+
+# Block test and demo pages from indexing
+Disallow: /collage-demo.html
+Disallow: /test-images.html
+Disallow: /velvet-hangers-fix-verify.html
+Disallow: /404.html
+
+# Block documentation and internal directories
+Disallow: /docs/
+
+# Block scripts and node_modules
+Disallow: /scripts/
 
 # Sitemap location
 Sitemap: https://fashionvault.app/sitemap.xml
 
 # Crawl-delay (optional, helps prevent server overload)
 Crawl-delay: 1
-
-# Block access to admin or private areas (if any in future)
-# Disallow: /admin/
-# Disallow: /private/
