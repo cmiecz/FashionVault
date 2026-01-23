@@ -7,7 +7,7 @@
     <!-- Homepage - Highest Priority -->
     <url>
         <loc>https://fashionvault.app/</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-23</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
@@ -15,7 +15,7 @@
     <!-- About Page -->
     <url>
         <loc>https://fashionvault.app/about.html</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -23,7 +23,7 @@
     <!-- Top Products Page -->
     <url>
         <loc>https://fashionvault.app/top-products.html</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-23</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -31,7 +31,7 @@
     <!-- Support Page -->
     <url>
         <loc>https://fashionvault.app/support.html</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-23</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -39,7 +39,7 @@
     <!-- Privacy Policy -->
     <url>
         <loc>https://fashionvault.app/privacy.html</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-23</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
     </url>
@@ -47,9 +47,9 @@
     <!-- Terms of Service -->
     <url>
         <loc>https://fashionvault.app/terms.html</loc>
-        <lastmod>2026-01-14</lastmod>
+        <lastmod>2026-01-23</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.5</priority>
-    </url
+    </url>
     
 </urlset>

@@ -8,7 +8,6 @@ Allow: /
 Disallow: /collage-demo.html
 Disallow: /test-images.html
 Disallow: /velvet-hangers-fix-verify.html
-Disallow: /404.html
 
 # Block documentation and internal directories
 Disallow: /docs/
